@@ -1,3 +1,4 @@
+import { createEmailVerificationToken } from "better-auth/api";
 import test from "node:test";
 import assert from "node:assert/strict";
 import request from "supertest";
@@ -11,11 +12,13 @@ import { budgetedEmail, type AccountEmail } from "../../src/auth/email.js";
 const url = process.env.TEST_DATABASE_URL;
 test("account lifecycle and request protections", { skip: !url }, async (t) => {
   const pool = createDatabase(url!);
+  let isolated = false;
   try {
     assert.equal(
       (await pool.query("SELECT current_database() AS name")).rows[0].name,
       "upcoming_test",
     );
+    isolated = true;
     await runner({
       databaseUrl: url!,
       direction: "up",
@@ -203,6 +206,73 @@ test("account lifecycle and request protections", { skip: !url }, async (t) => {
           .expect(400);
       },
     );
+    await t.test(
+      "changing passwords revokes other sessions even if the client requests otherwise",
+      async () => {
+        await clearLimits();
+        const other = request.agent(app);
+        await post(
+          "/sign-in/email",
+          { email: "alice@example.test", password: "new-password-for-tests" },
+          other,
+        ).expect(200);
+        await post(
+          "/change-password",
+          {
+            currentPassword: "wrong-password",
+            newPassword: "final-test-password",
+          },
+          alice,
+        ).expect(400);
+        await post(
+          "/change-password",
+          {
+            currentPassword: "new-password-for-tests",
+            newPassword: "final-test-password",
+            revokeOtherSessions: false,
+          },
+          alice,
+        ).expect(200);
+        await other.get("/api/me").expect(401);
+        await alice.get("/api/me").expect(200);
+      },
+    );
+    await t.test(
+      "expired verification links fail and public sessions use secure cookies",
+      async () => {
+        const token = await createEmailVerificationToken(
+          config.secret,
+          "bob@example.test",
+          undefined,
+          -1,
+        );
+        const expired = await request(app)
+          .get("/api/auth/verify-email")
+          .query({ token, callbackURL: "/login" })
+          .expect(302);
+        assert.ok(expired.headers.location);
+        assert.match(expired.headers.location, /error=/);
+        await clearLimits();
+        const publicConfig = readAuthConfig({
+          AUTH_MODE: "public",
+          AUTH_BASE_URL: "https://upcoming.example",
+          AUTH_SECRET: "public-test-secret-with-at-least-32-characters",
+          RESEND_API_KEY: "test-key",
+          AUTH_EMAIL_FROM: "accounts@upcoming.example",
+        });
+        const publicAuth = createAuth(pool, publicConfig, async () => {});
+        const publicApp = createApp({
+          checkDatabase: async () => {},
+          accounts: { auth: publicAuth, config: publicConfig },
+        });
+        const signedIn = await request(publicApp)
+          .post("/api/auth/sign-in/email")
+          .set("Origin", publicConfig.origin)
+          .send({ email: "bob@example.test", password })
+          .expect(200);
+        assert.match(String(signedIn.headers["set-cookie"]), /; Secure/);
+      },
+    );
     await t.test("sign-out and expiry invalidate server sessions", async () => {
       await post("/sign-out", {}, alice).expect(200);
       await alice.get("/api/me").expect(401);
@@ -258,6 +328,12 @@ test("account lifecycle and request protections", { skip: !url }, async (t) => {
       },
     );
   } finally {
+    if (isolated)
+      await pool
+        .query(
+          "TRUNCATE auth_user, auth_account, auth_session, auth_verification, auth_rate_limit, auth_email_limits CASCADE",
+        )
+        .catch(() => {});
     await pool.end();
   }
 });

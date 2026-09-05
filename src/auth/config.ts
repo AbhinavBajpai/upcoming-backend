@@ -40,6 +40,11 @@ export function readAuthConfig(env: NodeJS.ProcessEnv = process.env) {
     throw new Error("SMTP_PORT must be a valid port.");
   const secret =
     env.AUTH_SECRET ?? "upcoming-local-only-secret-change-for-public-use";
+  if (
+    mode === "public" &&
+    secret === "upcoming-local-only-secret-change-for-public-use"
+  )
+    throw new Error("Public authentication requires a unique AUTH_SECRET.");
   if (secret.length < 32)
     throw new Error("AUTH_SECRET must contain at least 32 characters.");
   return {
