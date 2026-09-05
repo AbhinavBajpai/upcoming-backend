@@ -16,14 +16,12 @@ export function friendRoutes(
     try {
       const user = accounts ? await currentUser(accounts.auth, req) : null;
       if (!user) {
-        res
-          .status(401)
-          .json({
-            error: {
-              code: "SIGN_IN_REQUIRED",
-              message: "Please sign in to connect with friends.",
-            },
-          });
+        res.status(401).json({
+          error: {
+            code: "SIGN_IN_REQUIRED",
+            message: "Please sign in to connect with friends.",
+          },
+        });
         return;
       }
       res.locals.friendUserId = user.id;
@@ -32,29 +30,47 @@ export function friendRoutes(
           req.get("origin") !== accounts!.config.origin ||
           !req.is("application/json")
         ) {
-          res
-            .status(403)
-            .json({
-              error: {
-                code: "INVALID_ORIGIN",
-                message: "Please reload the page and try again.",
-              },
-            });
+          res.status(403).json({
+            error: {
+              code: "INVALID_ORIGIN",
+              message: "Please reload the page and try again.",
+            },
+          });
           return;
         }
         if (!z.object({}).strict().safeParse(req.body).success) {
-          res
-            .status(400)
-            .json({
-              error: {
-                code: "INVALID_BODY",
-                message: "Send an empty JSON object.",
-              },
-            });
+          res.status(400).json({
+            error: {
+              code: "INVALID_BODY",
+              message: "Send an empty JSON object.",
+            },
+          });
           return;
         }
       }
       next();
+    } catch (error) {
+      failure(error, res);
+    }
+  });
+  router.get("/api/friends/interest", async (req, res) => {
+    const query = z
+      .object({
+        filmIds: z
+          .string()
+          .transform((value) => value.split(","))
+          .pipe(z.array(z.uuid()).min(1).max(100)),
+      })
+      .strict()
+      .safeParse(req.query);
+    if (!query.success) {
+      invalid(res);
+      return;
+    }
+    try {
+      res.json(
+        await store.interest(res.locals.friendUserId, query.data.filmIds),
+      );
     } catch (error) {
       failure(error, res);
     }
@@ -126,14 +142,12 @@ export function friendRoutes(
   return router;
 }
 function invalid(res: import("express").Response) {
-  res
-    .status(400)
-    .json({
-      error: {
-        code: "INVALID_REQUEST",
-        message: "Invalid profile or friendship action.",
-      },
-    });
+  res.status(400).json({
+    error: {
+      code: "INVALID_REQUEST",
+      message: "Invalid profile or friendship action.",
+    },
+  });
 }
 function failure(error: unknown, res: import("express").Response) {
   if (error instanceof FriendError) {
@@ -154,12 +168,10 @@ function failure(error: unknown, res: import("express").Response) {
     res.status(status).json({ error: { code: error.code, message } });
     return;
   }
-  res
-    .status(503)
-    .json({
-      error: {
-        code: "FRIENDS_UNAVAILABLE",
-        message: "Friends are temporarily unavailable. Please try again.",
-      },
-    });
+  res.status(503).json({
+    error: {
+      code: "FRIENDS_UNAVAILABLE",
+      message: "Friends are temporarily unavailable. Please try again.",
+    },
+  });
 }

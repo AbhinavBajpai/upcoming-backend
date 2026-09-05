@@ -39,6 +39,33 @@ export function friendStore(pool: Pool) {
   }
   return {
     profile,
+    async interest(userId: string, filmIds: string[]) {
+      const ids = [...new Set(filmIds.map((id) => id.toLowerCase()))];
+      const result = await pool.query<{
+        filmId: string;
+        id: string;
+        displayName: string;
+      }>(
+        `WITH accepted AS MATERIALIZED (
+          SELECT u.id, u.name FROM upcoming.friendships f
+          JOIN auth_user u ON u.id=CASE WHEN f.user_low=$1 THEN f.user_high ELSE f.user_low END
+          WHERE $1 IN (f.user_low,f.user_high) AND f.status='accepted' AND u."emailVerified"=true
+          FOR SHARE OF f
+        ) SELECT s.film_id::text AS "filmId", a.id, a.name AS "displayName"
+          FROM accepted a JOIN upcoming.stars s ON s.user_id=a.id
+          WHERE s.film_id=ANY($2::uuid[])
+          ORDER BY s.film_id,a.name COLLATE "C",a.id`,
+        [userId, ids],
+      );
+      const groups = new Map(
+        ids.map((id) => [id, [] as { id: string; displayName: string }[]]),
+      );
+      for (const { filmId, id, displayName } of result.rows)
+        groups.get(filmId)!.push({ id, displayName });
+      return {
+        films: ids.map((filmId) => ({ filmId, friends: groups.get(filmId)! })),
+      };
+    },
     async list(userId: string) {
       const result = await pool.query<Connection>(
         `SELECT f.id, u.id AS "userId", u.name AS "displayName",
