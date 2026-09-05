@@ -1,0 +1,2539 @@
+{
+  "checked_at": "2026-09-05T10:15:13.970Z",
+  "unique_movies": 145,
+  "note": "Live snapshot; checks source consistency, not completeness against an independent UK release calendar.",
+  "windows": [
+    {
+      "from": "2026-09-01",
+      "to": "2026-09-30",
+      "query": {
+        "region": "GB",
+        "with_release_type": "3",
+        "sort_by": "release_date.asc",
+        "release_date.gte": "2026-09-01",
+        "release_date.lte": "2026-09-30"
+      },
+      "reported_results": 49,
+      "pages": 3,
+      "movies": [
+        {
+          "id": 1743005,
+          "title": "Drain Flies",
+          "discover_date": "2026-09-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1461275,
+          "title": "Plastic Surgery",
+          "discover_date": "2026-09-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1723616,
+          "title": "The Devil Is In Me",
+          "discover_date": "2026-09-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1669281,
+          "title": "Romanchakam",
+          "discover_date": "2026-09-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1284465,
+          "title": "The Death of Robin Hood",
+          "discover_date": "2026-09-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1686683,
+          "title": "Kuzma: Extremely Happy",
+          "discover_date": "2026-09-03",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-03"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-03"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1759955,
+          "title": "Little LeBlanc in Big Trouble",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1714880,
+          "title": "She Saw Us",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1657843,
+          "title": "P31",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1564614,
+          "title": "Leviticus",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-06-05"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            },
+            {
+              "type": 5,
+              "date": "2026-11-16"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1554956,
+          "title": "The Incomer",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-08-13"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1540865,
+          "title": "Super Nature",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2025-10-12"
+            },
+            {
+              "type": 1,
+              "date": "2026-02-28"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1476682,
+          "title": "Gail Daughtry and the Celebrity Sex Pass",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1378537,
+          "title": "Mirzapur: The Movie",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1285895,
+          "title": "Late Fame",
+          "discover_date": "2026-09-04",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-02-28"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1758273,
+          "title": "Hunted",
+          "discover_date": "2026-09-05",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-05"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-05"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1447853,
+          "title": "Oasis: Don't Look Back in Anger",
+          "discover_date": "2026-09-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1318413,
+          "title": "Pressure",
+          "discover_date": "2026-09-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1101412,
+          "title": "Fall 2: Deadpoint",
+          "discover_date": "2026-09-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1548993,
+          "title": "Of All the Things",
+          "discover_date": "2026-09-10",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2025-05-15"
+            },
+            {
+              "type": 1,
+              "date": "2025-09-13"
+            },
+            {
+              "type": 1,
+              "date": "2025-10-01"
+            },
+            {
+              "type": 1,
+              "date": "2025-10-04"
+            },
+            {
+              "type": 1,
+              "date": "2025-10-21"
+            },
+            {
+              "type": 1,
+              "date": "2025-11-05"
+            },
+            {
+              "type": 1,
+              "date": "2025-11-07"
+            },
+            {
+              "type": 1,
+              "date": "2026-02-28"
+            },
+            {
+              "type": 1,
+              "date": "2026-03-06"
+            },
+            {
+              "type": 1,
+              "date": "2026-03-22"
+            },
+            {
+              "type": 1,
+              "date": "2026-04-18"
+            },
+            {
+              "type": 1,
+              "date": "2026-04-24"
+            },
+            {
+              "type": 1,
+              "date": "2026-05-31"
+            },
+            {
+              "type": 1,
+              "date": "2026-08-23"
+            },
+            {
+              "type": 1,
+              "date": "2025-12-20"
+            },
+            {
+              "type": 1,
+              "date": "2026-09-26"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-10"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-10"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1465943,
+          "title": "Mandaadi",
+          "discover_date": "2026-09-10",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-10"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-10"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1751569,
+          "title": "Yuja",
+          "discover_date": "2026-09-11",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-11"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-11"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1475799,
+          "title": "Haiwaan",
+          "discover_date": "2026-09-11",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-11"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-11"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1404684,
+          "title": "Just an Illusion",
+          "discover_date": "2026-09-11",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-11"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-11"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1377237,
+          "title": "Runner",
+          "discover_date": "2026-09-11",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-11"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-11"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1302904,
+          "title": "Practical Magic 2",
+          "discover_date": "2026-09-11",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-08-26"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-11"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-11"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1187326,
+          "title": "Tad and The Magic Lamp",
+          "discover_date": "2026-09-11",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-11"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-11"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1730508,
+          "title": "Andy Goldsworthy in Conversation with Andrew Graham-Dixon",
+          "discover_date": "2026-09-13",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-13"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-13"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1739735,
+          "title": "James McNeill Whistler",
+          "discover_date": "2026-09-15",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-15"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-15"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1634902,
+          "title": "The Train",
+          "discover_date": "2026-09-17",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-17"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-17"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1616493,
+          "title": "Premature",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1537518,
+          "title": "The Cycle of Love",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1528580,
+          "title": "Hermit",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1477104,
+          "title": "Shaun the Sheep: The Beast of Mossy Bottom",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1423191,
+          "title": "Resident Evil",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1310573,
+          "title": "Barrio Triste",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1198654,
+          "title": "Bad Apples",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2025-10-09"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1165369,
+          "title": "De Gaulle: Liberté",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1021848,
+          "title": "Queen at Sea",
+          "discover_date": "2026-09-18",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-08-15"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1263337,
+          "title": "Heart of the Beast",
+          "discover_date": "2026-09-23",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1692364,
+          "title": "Shadows of Beirut",
+          "discover_date": "2026-09-25",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-25"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1691418,
+          "title": "For Those Who Love, Leave, and Love Again",
+          "discover_date": "2026-09-25",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-25"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1553969,
+          "title": "Sheep in the Box",
+          "discover_date": "2026-09-25",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-08-14"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-25"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1517111,
+          "title": "Boorman and the Devil",
+          "discover_date": "2026-09-25",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-03-06"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-25"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1503762,
+          "title": "Sense and Sensibility",
+          "discover_date": "2026-09-25",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-25"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1469342,
+          "title": "Her Private Hell",
+          "discover_date": "2026-09-25",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-08-16"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-25"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1356474,
+          "title": "Babystar",
+          "discover_date": "2026-09-25",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-25"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1058424,
+          "title": "Hope",
+          "discover_date": "2026-09-25",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-08-16"
+            },
+            {
+              "type": 3,
+              "date": "2026-09-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-25"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1756742,
+          "title": "Out of Breath",
+          "discover_date": "2026-09-29",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-09-29"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-09-29"
+          ],
+          "discover_date_matches": true
+        }
+      ],
+      "duplicate_ids": 0,
+      "date_mismatches": 0,
+      "missing_qualifying_release": 0,
+      "chronological": true
+    },
+    {
+      "from": "2026-10-01",
+      "to": "2026-10-31",
+      "query": {
+        "region": "GB",
+        "with_release_type": "3",
+        "sort_by": "release_date.asc",
+        "release_date.gte": "2026-10-01",
+        "release_date.lte": "2026-10-31"
+      },
+      "reported_results": 48,
+      "pages": 3,
+      "movies": [
+        {
+          "id": 1505441,
+          "title": "Nightmares",
+          "discover_date": "2026-10-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1632638,
+          "title": "Try!",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-06-13"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1590154,
+          "title": "The Fall of Barsisa",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1528830,
+          "title": "Extra Geography",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1447059,
+          "title": "Child",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-06-20"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1438874,
+          "title": "Secrets of the Southwest",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1438857,
+          "title": "Secrets of the Southwest: Science Behind the Secrets",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1433583,
+          "title": "The Weight",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1397485,
+          "title": "Girls Like Girls",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1299581,
+          "title": "Knife: The Attempted Murder of Salman Rushdie",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-09-10"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1283515,
+          "title": "Verity",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1248832,
+          "title": "Digger",
+          "discover_date": "2026-10-02",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-09-22"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-02"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-02"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1746080,
+          "title": "Early Winter's Sorrow",
+          "discover_date": "2026-10-03",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-03"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-03"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1719676,
+          "title": "Take His Life",
+          "discover_date": "2026-10-03",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-03"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-03"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1737272,
+          "title": "Wake Me Up",
+          "discover_date": "2026-10-04",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1678239,
+          "title": "Lesbian Lines",
+          "discover_date": "2026-10-09",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-06-11"
+            },
+            {
+              "type": 1,
+              "date": "2026-06-19"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1522690,
+          "title": "The Lost Children of Tuam",
+          "discover_date": "2026-10-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1496491,
+          "title": "Comédie-Française",
+          "discover_date": "2026-10-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1400837,
+          "title": "Other Mommy",
+          "discover_date": "2026-10-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1281331,
+          "title": "The Social Reckoning",
+          "discover_date": "2026-10-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1245119,
+          "title": "The Yellow Tie",
+          "discover_date": "2026-10-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 977942,
+          "title": "The Uprising",
+          "discover_date": "2026-10-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1734486,
+          "title": "Our Share of Sand",
+          "discover_date": "2026-10-10",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-10"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-10"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1725773,
+          "title": "For Your Suffering",
+          "discover_date": "2020-10-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2020-10-31"
+            },
+            {
+              "type": 3,
+              "date": "2021-09-25"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-16"
+            },
+            {
+              "type": 3,
+              "date": "2020-10-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-16"
+          ],
+          "discover_date_matches": false
+        },
+        {
+          "id": 1654581,
+          "title": "Nayyi Navelli",
+          "discover_date": "2026-10-16",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-16"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-16"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1465063,
+          "title": "Forgotten Island",
+          "discover_date": "2026-10-16",
+          "gb_releases": [
+            {
+              "type": 2,
+              "date": "2026-10-04"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-16"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-16"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1255833,
+          "title": "Whalefall",
+          "discover_date": "2026-10-16",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-16"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-16"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1212310,
+          "title": "Winter of the Crow",
+          "discover_date": "2026-10-16",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-16"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-16"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1462368,
+          "title": "These Violent Delights",
+          "discover_date": "2026-10-21",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-08-12"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-21"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-21"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1632136,
+          "title": "SYNTHETICA",
+          "discover_date": "2026-10-22",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-22"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-22"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1299329,
+          "title": "Josephine",
+          "discover_date": "2026-10-22",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-13"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-22"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-22"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1727734,
+          "title": "Ali G: Who Iz I?",
+          "discover_date": "2026-10-23",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1643567,
+          "title": "Ghosts: The Possession of Button House",
+          "discover_date": "2026-10-23",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1636996,
+          "title": "Blueberry Inn",
+          "discover_date": "2026-10-23",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1437696,
+          "title": "Fatherland",
+          "discover_date": "2026-10-23",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-14"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1425784,
+          "title": "Animol",
+          "discover_date": "2026-10-23",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1400940,
+          "title": "Clayface",
+          "discover_date": "2026-10-23",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 858035,
+          "title": "Klara and the Sun",
+          "discover_date": "2026-10-23",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-15"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 791523,
+          "title": "Wildwood",
+          "discover_date": "2026-10-23",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-11"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1473148,
+          "title": "Gentle Monster",
+          "discover_date": "2026-10-30",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-30"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-30"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1376400,
+          "title": "Crawlers",
+          "discover_date": "2026-10-30",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-30"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-30"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1375441,
+          "title": "Primetime",
+          "discover_date": "2026-10-30",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-30"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-30"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1364953,
+          "title": "Mārama",
+          "discover_date": "2026-10-30",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2025-11-15"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-30"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-30"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1227877,
+          "title": "I Love Boosters",
+          "discover_date": "2026-10-30",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-09"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-30"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-30"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1195803,
+          "title": "Wicker",
+          "discover_date": "2026-10-30",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-08"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-30"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-30"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1125403,
+          "title": "In the Shadows",
+          "discover_date": "2026-10-30",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-30"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-30"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 31767,
+          "title": "The Devils",
+          "discover_date": "1971-07-25",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "1971-07-25"
+            },
+            {
+              "type": 3,
+              "date": "2026-10-30"
+            },
+            {
+              "type": 5,
+              "date": "2012-03-19"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-30"
+          ],
+          "discover_date_matches": false
+        },
+        {
+          "id": 1475044,
+          "title": "Forget-me-not",
+          "discover_date": "2026-10-31",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-10-31"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-10-31"
+          ],
+          "discover_date_matches": true
+        }
+      ],
+      "duplicate_ids": 0,
+      "date_mismatches": 2,
+      "missing_qualifying_release": 0,
+      "chronological": false
+    },
+    {
+      "from": "2026-11-01",
+      "to": "2026-11-30",
+      "query": {
+        "region": "GB",
+        "with_release_type": "3",
+        "sort_by": "release_date.asc",
+        "release_date.gte": "2026-11-01",
+        "release_date.lte": "2026-11-30"
+      },
+      "reported_results": 16,
+      "pages": 1,
+      "movies": [
+        {
+          "id": 1652192,
+          "title": "Finding Faith",
+          "discover_date": "2026-11-06",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-06"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1649403,
+          "title": "George Michael: The Faith Tour",
+          "discover_date": "2026-11-06",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-06"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1578488,
+          "title": "Merry Christmas Aubrey Flint",
+          "discover_date": "2026-11-06",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-06"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1381071,
+          "title": "Godzilla Minus Zero",
+          "discover_date": "2026-11-06",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-06"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1286656,
+          "title": "I Play Rocky",
+          "discover_date": "2026-11-06",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-06"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 656908,
+          "title": "Ramayana",
+          "discover_date": "2026-11-06",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-06"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1752792,
+          "title": "Fox",
+          "discover_date": "2026-11-11",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-11"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-11"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1437511,
+          "title": "How to Rob a Bank",
+          "discover_date": "2026-11-13",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-13"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-13"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1401459,
+          "title": "Fjord",
+          "discover_date": "2026-11-13",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-17"
+            },
+            {
+              "type": 3,
+              "date": "2026-11-13"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-13"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1127282,
+          "title": "Prima Facie",
+          "discover_date": "2026-11-13",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-13"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-13"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1748010,
+          "title": "The Neighbourhood is Changing",
+          "discover_date": "2026-11-16",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-16"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-16"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1760753,
+          "title": "DDT XX Century",
+          "discover_date": "2026-11-17",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-17"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-17"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1447885,
+          "title": "Heysel 85",
+          "discover_date": "2026-11-20",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-15"
+            },
+            {
+              "type": 3,
+              "date": "2026-11-20"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-20"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1300968,
+          "title": "The Hunger Games: Sunrise on the Reaping",
+          "discover_date": "2026-11-20",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-20"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-20"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1084409,
+          "title": "A Talent for Murder",
+          "discover_date": "2026-11-20",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-20"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-20"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1673706,
+          "title": "Nosebleed",
+          "discover_date": "2026-11-27",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-11-27"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-11-27"
+          ],
+          "discover_date_matches": true
+        }
+      ],
+      "duplicate_ids": 0,
+      "date_mismatches": 0,
+      "missing_qualifying_release": 0,
+      "chronological": true
+    },
+    {
+      "from": "2026-12-01",
+      "to": "2026-12-31",
+      "query": {
+        "region": "GB",
+        "with_release_type": "3",
+        "sort_by": "release_date.asc",
+        "release_date.gte": "2026-12-01",
+        "release_date.lte": "2026-12-31"
+      },
+      "reported_results": 13,
+      "pages": 1,
+      "movies": [
+        {
+          "id": 1661297,
+          "title": "Prize",
+          "discover_date": "2026-12-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1424261,
+          "title": "UK Holiday",
+          "discover_date": "2026-12-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1455247,
+          "title": "I See Buildings Fall Like Lightning",
+          "discover_date": "2026-12-04",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1078446,
+          "title": "Violent Night 2",
+          "discover_date": "2026-12-04",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-04"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-04"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1608175,
+          "title": "Big Polio",
+          "discover_date": "2026-12-09",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-09"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-09"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1655305,
+          "title": "Watkins Law",
+          "discover_date": "2026-12-10",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-10"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-10"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1284046,
+          "title": "Onslaught",
+          "discover_date": "2026-12-11",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-11"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-11"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1358274,
+          "title": "Starlight",
+          "discover_date": "2026-12-12",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-12"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-12"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1752397,
+          "title": "BIRDMAN 3",
+          "discover_date": "2026-12-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1170608,
+          "title": "Dune: Part Three",
+          "discover_date": "2026-12-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1003596,
+          "title": "Avengers: Doomsday",
+          "discover_date": "2026-12-18",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-18"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-18"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1300926,
+          "title": "The Angry Birds Movie 3",
+          "discover_date": "2026-12-23",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-23"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-23"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1260649,
+          "title": "Jumanji: Open World",
+          "discover_date": "2026-12-25",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2026-12-25"
+            }
+          ],
+          "qualifying_dates": [
+            "2026-12-25"
+          ],
+          "discover_date_matches": true
+        }
+      ],
+      "duplicate_ids": 0,
+      "date_mismatches": 0,
+      "missing_qualifying_release": 0,
+      "chronological": true
+    },
+    {
+      "from": "2027-01-01",
+      "to": "2027-01-31",
+      "query": {
+        "region": "GB",
+        "with_release_type": "3",
+        "sort_by": "release_date.asc",
+        "release_date.gte": "2027-01-01",
+        "release_date.lte": "2027-01-31"
+      },
+      "reported_results": 11,
+      "pages": 1,
+      "movies": [
+        {
+          "id": 1752116,
+          "title": "Summer Break",
+          "discover_date": "2027-01-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-01-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1710158,
+          "title": "Attack On Allford 3: Too Cruel For School",
+          "discover_date": "2027-01-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-01-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1658606,
+          "title": "The Heavy End",
+          "discover_date": "2027-01-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-01-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1421903,
+          "title": "Werwulf",
+          "discover_date": "2027-01-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-01-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1372443,
+          "title": "Mr. Irrelevant: The John Tuggle Story",
+          "discover_date": "2027-01-01",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-01-01"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-01"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1532610,
+          "title": "Ink",
+          "discover_date": "2027-01-08",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-12"
+            },
+            {
+              "type": 3,
+              "date": "2027-01-08"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-08"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1168719,
+          "title": "Silent Friend",
+          "discover_date": "2027-01-08",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2025-10-17"
+            },
+            {
+              "type": 3,
+              "date": "2027-01-08"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-08"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1391239,
+          "title": "The Debut",
+          "discover_date": "2027-01-15",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-18"
+            },
+            {
+              "type": 3,
+              "date": "2027-01-15"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-15"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1747216,
+          "title": "Renoir & Love",
+          "discover_date": "2027-01-19",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-01-19"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-19"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1247047,
+          "title": "Bollywoof",
+          "discover_date": "2027-01-22",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-01-22"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-22"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1599230,
+          "title": "Elsinore",
+          "discover_date": "2027-01-29",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-07"
+            },
+            {
+              "type": 3,
+              "date": "2027-01-29"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-01-29"
+          ],
+          "discover_date_matches": true
+        }
+      ],
+      "duplicate_ids": 0,
+      "date_mismatches": 0,
+      "missing_qualifying_release": 0,
+      "chronological": true
+    },
+    {
+      "from": "2027-02-01",
+      "to": "2027-02-28",
+      "query": {
+        "region": "GB",
+        "with_release_type": "3",
+        "sort_by": "release_date.asc",
+        "release_date.gte": "2027-02-01",
+        "release_date.lte": "2027-02-28"
+      },
+      "reported_results": 4,
+      "pages": 1,
+      "movies": [
+        {
+          "id": 621304,
+          "title": "Children of Blood and Bone",
+          "discover_date": "2027-02-05",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-02-05"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-02-05"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1370191,
+          "title": "Tender Loving Care",
+          "discover_date": "2027-02-12",
+          "gb_releases": [
+            {
+              "type": 1,
+              "date": "2026-10-15"
+            },
+            {
+              "type": 3,
+              "date": "2027-02-12"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-02-12"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1746764,
+          "title": "Right Answers Only",
+          "discover_date": "2027-02-14",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-02-14"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-02-14"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1473784,
+          "title": "Bunker",
+          "discover_date": "2027-02-19",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-02-19"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-02-19"
+          ],
+          "discover_date_matches": true
+        }
+      ],
+      "duplicate_ids": 0,
+      "date_mismatches": 0,
+      "missing_qualifying_release": 0,
+      "chronological": true
+    },
+    {
+      "from": "2027-03-01",
+      "to": "2027-03-31",
+      "query": {
+        "region": "GB",
+        "with_release_type": "3",
+        "sort_by": "release_date.asc",
+        "release_date.gte": "2027-03-01",
+        "release_date.lte": "2027-03-31"
+      },
+      "reported_results": 4,
+      "pages": 1,
+      "movies": [
+        {
+          "id": 615121,
+          "title": "The Thomas Crown Affair",
+          "discover_date": "2027-03-05",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-03-05"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-03-05"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1297467,
+          "title": "The Exorcist: Martyrs",
+          "discover_date": "2027-03-12",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-03-12"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-03-12"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1707867,
+          "title": "The Metropolitan Opera 2026/27: Silent Night",
+          "discover_date": "2027-03-20",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-03-20"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-03-20"
+          ],
+          "discover_date_matches": true
+        },
+        {
+          "id": 1266643,
+          "title": "Day Drinker",
+          "discover_date": "2027-03-26",
+          "gb_releases": [
+            {
+              "type": 3,
+              "date": "2027-03-26"
+            }
+          ],
+          "qualifying_dates": [
+            "2027-03-26"
+          ],
+          "discover_date_matches": true
+        }
+      ],
+      "duplicate_ids": 0,
+      "date_mismatches": 0,
+      "missing_qualifying_release": 0,
+      "chronological": true
+    }
+  ]
+}

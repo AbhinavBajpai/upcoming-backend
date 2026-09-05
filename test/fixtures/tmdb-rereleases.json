@@ -1,0 +1,53 @@
+{
+  "source": "TMDB live validation on 2026-09-05T10:12:58.291Z",
+  "from": "2026-10-01",
+  "to": "2026-10-31",
+  "movies": [
+    {
+      "id": 1725773,
+      "title": "For Your Suffering",
+      "discover_date": "2020-10-01",
+      "gb_releases": [
+        {
+          "type": 3,
+          "date": "2020-10-31"
+        },
+        {
+          "type": 3,
+          "date": "2021-09-25"
+        },
+        {
+          "type": 3,
+          "date": "2026-10-16"
+        },
+        {
+          "type": 3,
+          "date": "2020-10-01"
+        }
+      ],
+      "qualifying_dates": ["2026-10-16"],
+      "discover_date_matches": false
+    },
+    {
+      "id": 31767,
+      "title": "The Devils",
+      "discover_date": "1971-07-25",
+      "gb_releases": [
+        {
+          "type": 3,
+          "date": "1971-07-25"
+        },
+        {
+          "type": 3,
+          "date": "2026-10-30"
+        },
+        {
+          "type": 5,
+          "date": "2012-03-19"
+        }
+      ],
+      "qualifying_dates": ["2026-10-30"],
+      "discover_date_matches": false
+    }
+  ]
+}
