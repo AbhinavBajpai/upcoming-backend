@@ -1,6 +1,6 @@
 # Upcoming backend
 
-TypeScript + Express API for a UK theatrical-release calendar, with PostgreSQL and versioned migrations. React lives in the sibling `upcoming-frontend` repository. The foundation includes an application shell, health endpoints, local database setup, and the validated TMDB research command. Film storage/import, accounts, stars, and friendships are the next backlog slices.
+TypeScript + Express API for a UK theatrical-release calendar, with PostgreSQL and versioned migrations. React lives in the sibling `upcoming-frontend` repository. The foundation includes an application shell, health endpoints, local database setup, and the validated TMDB research command. Film storage and TMDB importing are now implemented. The monthly API/interface, accounts, stars and friendships are the next backlog slices.
 
 ## Run the local app with Docker
 
@@ -22,7 +22,7 @@ docker compose down        # remove containers/network; retain database data
 
 After code changes, rerun `docker compose up --build -d --wait`. To change the browser port, set `APP_PORT=3005` in the backend `.env`, then open http://localhost:3005. Port 55432 exposes PostgreSQL on loopback for optional local development tools; change `POSTGRES_PORT` if needed. Inside Compose, the app always connects to `db:5432`, independently of the host `DATABASE_URL` setting.
 
-Run these commands in your normal host terminal. No sandbox port publishing or Vite server is needed. The build copies source files explicitly and excludes `.env`; it does not bake the TMDB token into either image or the browser bundle. The current app foundation does not yet require that token at runtime.
+Run these commands in your normal host terminal. No sandbox port publishing or Vite server is needed. The build copies source files explicitly and excludes `.env`; it does not bake the TMDB token into either image or the browser bundle. The web app does not need the token; the optional sync job receives it separately at runtime.
 
 This configuration is for local testing, with local-only database credentials. It has no Cloudflare dependency. Home-server deployment and secret provisioning remain UP-13.
 
@@ -79,7 +79,7 @@ npm run db:up
 npm run db:migrate
 ```
 
-`node-pg-migrate` applies pending migrations transactionally and records them in `public.pgmigrations`. The first migration creates the `upcoming` schema for future app tables. Running the command again is safe. Migration files live in `migrations/`; add a new migration instead of editing one that has already been applied. Do not run destructive rollback commands against user data.
+`node-pg-migrate` applies pending migrations transactionally and records them in `public.pgmigrations`. Migrations create the `upcoming` schema and its films, releases and sync-run tables. Running the command again is safe. Migration files live in `migrations/`; add a new migration instead of editing one that has already been applied. Do not run destructive rollback commands against user data.
 
 ## Production-build smoke test
 
@@ -99,9 +99,19 @@ For an actual deployment, set `NODE_ENV=production` and an explicit `DATABASE_UR
 npm run check
 ```
 
-This runs TypeScript, ESLint, ten tests (API/configuration plus TMDB date regressions), and the production build. Tests do not need a token or database. CI also applies migrations twice against a temporary PostgreSQL service. `npm run format` formats source and configuration files.
+This runs TypeScript, ESLint, unit tests (API/configuration, TMDB requests and date regressions), and the production build. Tests do not need a token or database. CI also runs the catalogue integration tests and applies migrations twice against a temporary PostgreSQL service. `npm run format` formats source and configuration files.
 
 `/api/health` tests process liveness; `/api/ready` tests database connectivity and returns 503 on failure without exposing connection details. This readiness endpoint does not yet verify the application schema version.
+
+## Import films
+
+The catalogue stores films, regional release events and sync history. To import with Docker:
+
+```bash
+docker compose --profile tools run --build --rm -T sync
+```
+
+This one-shot job uses `TMDB_READ_ACCESS_TOKEN` from the backend `.env`. It refreshes the current UK month plus six months ahead, and rechecks known films for changed/withdrawn dates. The UI is not yet connected to the catalogue. See [the sync guide](docs/catalog-sync.md) for local Node commands, scheduling, failure behaviour and integration tests.
 
 ## TMDB validation
 

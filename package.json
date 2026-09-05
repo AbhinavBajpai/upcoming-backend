@@ -19,12 +19,15 @@
     "validate:tmdb": "node --use-env-proxy --env-file=.env scripts/validate-tmdb.mjs",
     "check": "npm run typecheck && npm run lint && npm test && npm run build",
     "dev:all": "npm run db:up && npm run db:migrate && concurrently --kill-others --names api,web \"npm run dev\" \"npm --prefix ../upcoming-frontend run dev\"",
-    "format": "prettier --write src scripts test migrations *.json *.js *.yaml .github/workflows/*.yml"
+    "format": "prettier --write src scripts test migrations *.json *.js *.yaml .github/workflows/*.yml",
+    "sync:films": "node --use-env-proxy --env-file-if-exists=.env --import tsx src/sync.ts",
+    "test:integration": "node --import tsx --test test/integration/*.test.ts"
   },
   "dependencies": {
     "express": "^5.2.1",
     "node-pg-migrate": "^9.0.0",
-    "pg": "^8.23.0"
+    "pg": "^8.23.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
