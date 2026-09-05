@@ -1,3 +1,4 @@
+import { readCalendar } from "./catalog/calendar.js";
 import { createApp } from "./app.js";
 import { readConfig } from "./config.js";
 import { createDatabase } from "./database.js";
@@ -6,6 +7,7 @@ const config = readConfig();
 const database = createDatabase(config.databaseUrl);
 const app = createApp({
   frontendDir: config.frontendDir,
+  getCalendar: (month, now) => readCalendar(database, month, now),
   checkDatabase: async () => {
     await database.query("SELECT 1");
   },

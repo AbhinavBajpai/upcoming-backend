@@ -1,3 +1,4 @@
+import { readCalendar } from "../../src/catalog/calendar.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
@@ -284,6 +285,113 @@ test("catalog database integration", { skip: !url }, async (t) => {
           ).rows[0].n,
           0,
         );
+      },
+    );
+    await t.test(
+      "monthly calendar filters regions/types, selects one revival event, and preserves stable ordering",
+      async () => {
+        await clear();
+        const snapshots: FilmSnapshot[] = [
+          {
+            tmdbId: 1,
+            title: "Alpha revival",
+            posterPath: null,
+            releases: [
+              { country: "GB", type: 3, date: "1971-07-25" },
+              { country: "GB", type: 3, date: "2026-10-31" },
+              { country: "GB", type: 3, date: "2026-10-30" },
+            ],
+          },
+          {
+            tmdbId: 2,
+            title: "Bravo",
+            posterPath: "/poster.jpg",
+            releases: [{ country: "GB", type: 3, date: "2026-10-30" }],
+          },
+          {
+            tmdbId: 3,
+            title: "Limited only",
+            posterPath: null,
+            releases: [{ country: "GB", type: 2, date: "2026-10-15" }],
+          },
+          {
+            tmdbId: 4,
+            title: "US only",
+            posterPath: null,
+            releases: [{ country: "US", type: 3, date: "2026-10-01" }],
+          },
+          {
+            tmdbId: 5,
+            title: "Unknown date",
+            posterPath: null,
+            releases: [{ country: "GB", type: 3, date: null }],
+          },
+          {
+            tmdbId: 6,
+            title: "Boundary",
+            posterPath: null,
+            releases: [
+              { country: "GB", type: 3, date: "2026-09-30" },
+              { country: "GB", type: 3, date: "2026-10-01" },
+              { country: "GB", type: 3, date: "2026-11-01" },
+            ],
+          },
+        ];
+        const calendarSource: FilmSource = {
+          discover: async () => snapshots.map((f) => f.tmdbId),
+          film: async (id) => snapshots.find((f) => f.tmdbId === id)!,
+        };
+        await syncCatalog(pool, calendarSource, monthWindows("2026-09", 2));
+        const clock = new Date("2026-09-05T12:00:00Z");
+        const october = await readCalendar(pool, "2026-10", clock);
+        assert.deepEqual(
+          october.films.map((f) => [f.title, f.releaseDate, f.isRevival]),
+          [
+            ["Boundary", "2026-10-01", true],
+            ["Alpha revival", "2026-10-30", true],
+            ["Bravo", "2026-10-30", false],
+          ],
+        );
+        assert.equal(october.films[2]!.posterPath, "/poster.jpg");
+        assert.deepEqual(october.range, { from: "2026-09", to: "2027-03" });
+        assert.equal(october.monthSynced, true);
+        assert.ok(october.lastSuccessfulSync);
+        const november = await readCalendar(pool, "2026-11", clock);
+        assert.equal(november.monthSynced, false);
+        assert.equal(november.films.length, 1);
+        await syncCatalog(pool, calendarSource, monthWindows("2026-12", 1));
+        const empty = await readCalendar(pool, "2026-12", clock);
+        assert.equal(empty.monthSynced, true);
+        assert.deepEqual(empty.films, []);
+        const history = await readCalendar(
+          pool,
+          "2026-09",
+          new Date("2026-10-01T12:00:00Z"),
+        );
+        assert.equal(history.range.from, "2026-09");
+        await assert.rejects(
+          readCalendar(pool, "1971-07", clock),
+          /MONTH_OUT_OF_RANGE/,
+        );
+        await assert.rejects(
+          readCalendar(pool, "2027-04", clock),
+          /MONTH_OUT_OF_RANGE/,
+        );
+      },
+    );
+    await t.test(
+      "fresh database reports an unsynced empty calendar without pretending the request failed",
+      async () => {
+        await clear();
+        const empty = await readCalendar(
+          pool,
+          "2026-09",
+          new Date("2026-09-05T12:00:00Z"),
+        );
+        assert.deepEqual(empty.films, []);
+        assert.equal(empty.monthSynced, false);
+        assert.equal(empty.lastSuccessfulSync, null);
+        assert.equal(empty.today, "2026-09-05");
       },
     );
     await clear();
