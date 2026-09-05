@@ -1,0 +1,30 @@
+name: Backend checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: upcoming
+          POSTGRES_USER: upcoming
+          POSTGRES_PASSWORD: upcoming_ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U upcoming -d upcoming"
+          --health-interval 2s --health-timeout 3s --health-retries 20
+    env:
+      DATABASE_URL: postgres://upcoming:upcoming_ci@localhost:5432/upcoming
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.1
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run db:migrate
+      - run: npm run db:migrate

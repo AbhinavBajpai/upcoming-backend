@@ -1,0 +1,44 @@
+{
+  "name": "upcoming-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.1 <23"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --import tsx --watch src/server.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node --env-file-if-exists=.env dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "node --import tsx --test test/*.test.mjs test/*.test.ts",
+    "db:up": "docker compose up -d --wait db",
+    "db:stop": "docker compose stop db",
+    "db:migrate": "node --env-file-if-exists=.env --import tsx src/migrate.ts",
+    "validate:tmdb": "node --use-env-proxy --env-file=.env scripts/validate-tmdb.mjs",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "dev:all": "npm run db:up && npm run db:migrate && concurrently --kill-others --names api,web \"npm run dev\" \"npm --prefix ../upcoming-frontend run dev\"",
+    "format": "prettier --write src scripts test migrations *.json *.js *.yaml .github/workflows/*.yml"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "node-pg-migrate": "^9.0.0",
+    "pg": "^8.23.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.1",
+    "@types/pg": "^8.23.1",
+    "@types/supertest": "^7.2.1",
+    "concurrently": "^10.0.5",
+    "eslint": "^10.10.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.6",
+    "supertest": "^7.2.2",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.69.0"
+  }
+}
