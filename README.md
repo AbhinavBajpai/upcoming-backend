@@ -1,6 +1,6 @@
 # Upcoming backend
 
-TypeScript + Express API for a UK theatrical-release calendar, with PostgreSQL and versioned migrations. React lives in the sibling `upcoming-frontend` repository. The foundation includes an application shell, health endpoints, local database setup, and the validated TMDB research command. Film storage and TMDB importing are now implemented. The public monthly calendar API is implemented; accounts, stars and friendships are the next backlog slices.
+TypeScript + Express API for a UK theatrical-release calendar, with PostgreSQL and versioned migrations. React lives in the sibling `upcoming-frontend` repository. The foundation includes an application shell, health endpoints, local database setup, and the validated TMDB research command. Film storage and TMDB importing are now implemented. The public monthly calendar API is implemented; verified email/password accounts are implemented; stars and friendships are the next backlog slices.
 
 ## Run the local app with Docker
 
@@ -12,7 +12,7 @@ From `upcoming-backend`, run:
 docker compose up --build -d --wait
 ```
 
-Open **http://localhost:3000**. Compose builds both repositories and starts two containers: Express serving the React build, and PostgreSQL. The app waits for a healthy database and runs pending migrations before listening. Database data is kept in a named volume. The app container runs as the unprivileged `node` user.
+Open **http://localhost:3000**. Compose builds both repositories and starts the app and database containers, plus a local Mailpit inbox: Express serving the React build, and PostgreSQL. The app waits for a healthy database and runs pending migrations before listening. Database data is kept in a named volume. The app container runs as the unprivileged `node` user.
 
 ```bash
 docker compose logs -f app  # application and migration logs
@@ -140,3 +140,17 @@ node --test
 ```
 
 See [the findings and proposed date-selection rules](docs/tmdb-validation.md). The important observed case is a revival that qualifies for a future month while discovery returns the film's old release date.
+
+## Accounts and local email
+
+Rebuild with `docker compose up --build -d --wait`. The app remains at http://localhost:3000; open **http://localhost:8025** for the local Mailpit inbox. Create an account using any test email, open its captured verification message, follow the link, then sign in. Forgot-password messages appear in the same inbox. No emails leave the local stack. If the inbox does not load immediately, wait a moment for its container to start.
+
+Verification links last one hour; reset links last 30 minutes and are single-use. Resets revoke existing sessions. Sessions last a fixed seven days. The Account page supports display-name changes, password changes, sign-out and revoking other devices. `/api/me` returns only `{user: {id, displayName}}` for a verified session, or 401. Other account endpoints live under `/api/auth`; cookies are required for protected actions, and POST requests require the configured browser Origin and JSON.
+
+A per-address/type 60-second email cooldown and a 90-message daily budget apply, including locally. If you resend immediately, allow a minute before retrying. Failed provider deliveries log only a safe message; users can request a new link. Local inbox messages contain working account links, so Mailpit stays bound to loopback and is never routed through the public tunnel.
+
+`APP_PORT` sets both the Docker web port and its auth origin. Use **localhost**, not a LAN address or `127.0.0.1`, for this default setup. `MAILPIT_PORT` changes the inbox port; `SMTP_PORT` changes the host SMTP port for Node development. `npm run dev:all` starts the database and Mailpit with the frontend at http://localhost:5173; its auth origin defaults to that URL.
+
+Production authentication is a separate configuration: `AUTH_MODE=public`, an HTTPS `AUTH_BASE_URL`, a random `AUTH_SECRET` of at least 32 characters, `RESEND_API_KEY` and a verified `AUTH_EMAIL_FROM`. Generate a secret using your password manager or `openssl rand -base64 32`, then place it in the backend runtime environment. Never use the local fallback secret publicly. The local Compose file intentionally uses local mode and captured email; it is not the deployment configuration. Exact trusted proxy socket IPs can be set via `AUTH_TRUSTED_PROXY_IPS`; only those peers may supply Cloudflare's client IP header. Configure origin access restrictions with the tunnel before enabling that trust.
+
+[The account decision and security model](docs/authentication.md) covers the selected library, costs and implementation boundaries. Real email sending and the home-server tunnel configuration remain untested until the owner provides deployment details. Library logs are disabled; do not add request logging that exposes cookies, passwords or verification/reset URLs.
