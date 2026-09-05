@@ -39,6 +39,6 @@ PostgreSQL 17 runs in Compose for local testing. Its development credentials are
 
 ## Deliberate limits of this slice
 
-The UI is a navigable foundation, not a populated calendar. There are no working account, star or friendship actions yet. The catalogue schema and importer are implemented, but the UI is not connected to them yet. `/api/ready` checks connectivity, not schema compatibility. A local multi-stage app image and Compose stack are available. Home-server deployment, secret provisioning and backup automation remain UP-13.
+The monthly API and responsive calendar are implemented, including revival dates and external film links. Verified email/password accounts and local email capture are implemented. Stars and friendships are the next slices. `/api/ready` checks connectivity, not schema compatibility. A local multi-stage app image and Compose stack are available. Home-server deployment, secret provisioning and backup automation remain UP-13.
 
-UP-03/04 provide the catalogue and sync foundation. Next: UP-05/06 connect monthly browsing. Authentication remains the decision in UP-07.
+UP-03–06 provide catalogue import and monthly browsing. [The authentication decision](authentication.md) and accounts (UP-07/08) are implemented; stars (UP-09) are next.

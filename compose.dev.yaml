@@ -1,0 +1,5 @@
+# Host Node development only; the containerised app uses mailpit:1025 internally.
+services:
+  mailpit:
+    ports:
+      - "127.0.0.1:${SMTP_PORT:-1025}:1025"

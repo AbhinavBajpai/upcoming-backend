@@ -1,4 +1,7 @@
 import express from "express";
+import { accountRoutes, currentUser } from "./auth/routes.js";
+import type { AccountAuth } from "./auth/service.js";
+import type { AuthConfig } from "./auth/config.js";
 import {
   CalendarError,
   parseMonth,
@@ -11,6 +14,7 @@ import { join, resolve } from "node:path";
 
 interface AppOptions {
   checkDatabase: () => Promise<void>;
+  accounts?: { auth: AccountAuth; config: AuthConfig };
   frontendDir?: string;
   getCalendar?: (month: string, now: Date) => Promise<ReleaseCalendar>;
   clock?: () => Date;
@@ -18,16 +22,45 @@ interface AppOptions {
 
 export function createApp({
   checkDatabase,
+  accounts,
   frontendDir,
   getCalendar,
   clock = () => new Date(),
 }: AppOptions) {
   const app = express();
   app.disable("x-powered-by");
+  app.use((_req, res, next) => {
+    res.setHeader("Referrer-Policy", "no-referrer");
+    next();
+  });
+  if (accounts) app.use(accountRoutes(accounts.auth, accounts.config));
   app.use(express.json({ limit: "32kb" }));
   app.use("/api", (_req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
     next();
+  });
+  app.get("/api/me", async (req, res) => {
+    try {
+      const user = accounts ? await currentUser(accounts.auth, req) : null;
+      if (!user) {
+        res
+          .status(401)
+          .json({
+            error: { code: "SIGN_IN_REQUIRED", message: "Please sign in." },
+          });
+        return;
+      }
+      res.json({ user });
+    } catch {
+      res
+        .status(503)
+        .json({
+          error: {
+            code: "ACCOUNTS_UNAVAILABLE",
+            message: "Accounts are temporarily unavailable.",
+          },
+        });
+    }
   });
   app.get("/api/health", (_req, res) => {
     res.json({ status: "ok", service: "upcoming-api", version: "0.1.0" });
@@ -85,10 +118,24 @@ export function createApp({
     const root = resolve(frontendDir);
     app.use(express.static(root));
     // Only known client routes receive HTML; missing assets stay 404s.
-    app.get(["/", "/releases", "/starred", "/friends"], (_req, res) => {
-      res.setHeader("Cache-Control", "no-cache");
-      res.sendFile(join(root, "index.html"));
-    });
+    app.get(
+      [
+        "/",
+        "/releases",
+        "/starred",
+        "/friends",
+        "/login",
+        "/signup",
+        "/verify-email",
+        "/forgot-password",
+        "/reset-password",
+        "/account",
+      ],
+      (_req, res) => {
+        res.setHeader("Cache-Control", "no-store");
+        res.sendFile(join(root, "index.html"));
+      },
+    );
   }
   app.use((_req, res) => {
     res

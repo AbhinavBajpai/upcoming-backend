@@ -10,6 +10,11 @@ services:
       PORT: 3000
       DATABASE_URL: postgres://upcoming:upcoming_local@db:5432/upcoming
       FRONTEND_DIST_DIR: /app/public
+      AUTH_MODE: local
+      AUTH_BASE_URL: http://localhost:${APP_PORT:-3000}
+      AUTH_SECRET: ${AUTH_SECRET:-upcoming-local-only-secret-change-for-public-use}
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
     ports:
       - "127.0.0.1:${APP_PORT:-3000}:3000"
     depends_on:
@@ -47,6 +52,11 @@ services:
         condition: service_healthy
     init: true
     restart: "no"
+  mailpit:
+    image: axllent/mailpit:v1.31.1
+    ports:
+      - "127.0.0.1:${MAILPIT_PORT:-8025}:8025"
+    restart: unless-stopped
   db:
     image: postgres:17-alpine
     environment:
