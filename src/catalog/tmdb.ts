@@ -19,6 +19,11 @@ const movieSchema = z.object({
   id: movieId,
   title: z.string().trim().min(1),
   poster_path: z.string().nullable(),
+  imdb_id: z
+    .string()
+    .nullable()
+    .optional()
+    .transform((value) => (value && /^tt[0-9]+$/.test(value) ? value : null)),
   release_dates: z.object({
     results: z.array(
       z.object({
@@ -179,6 +184,7 @@ export class TmdbSource implements FilmSource {
       tmdbId: movie.id,
       title: movie.title,
       posterPath: movie.poster_path,
+      imdbId: movie.imdb_id,
       releases: [...unique.values()],
     };
   }

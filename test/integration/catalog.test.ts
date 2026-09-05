@@ -39,6 +39,7 @@ test("catalog database integration", { skip: !url }, async (t) => {
       tmdbId: 31767,
       title: "The Devils",
       posterPath: null,
+      imdbId: null,
       releases: [
         { country: "GB", type: 3, date: "1971-07-25" },
         { country: "GB", type: 3, date: "2026-10-30" },
@@ -296,6 +297,7 @@ test("catalog database integration", { skip: !url }, async (t) => {
             tmdbId: 1,
             title: "Alpha revival",
             posterPath: null,
+            imdbId: null,
             releases: [
               { country: "GB", type: 3, date: "1971-07-25" },
               { country: "GB", type: 3, date: "2026-10-31" },
@@ -306,30 +308,35 @@ test("catalog database integration", { skip: !url }, async (t) => {
             tmdbId: 2,
             title: "Bravo",
             posterPath: "/poster.jpg",
+            imdbId: "tt1234567",
             releases: [{ country: "GB", type: 3, date: "2026-10-30" }],
           },
           {
             tmdbId: 3,
             title: "Limited only",
             posterPath: null,
+            imdbId: null,
             releases: [{ country: "GB", type: 2, date: "2026-10-15" }],
           },
           {
             tmdbId: 4,
             title: "US only",
             posterPath: null,
+            imdbId: null,
             releases: [{ country: "US", type: 3, date: "2026-10-01" }],
           },
           {
             tmdbId: 5,
             title: "Unknown date",
             posterPath: null,
+            imdbId: null,
             releases: [{ country: "GB", type: 3, date: null }],
           },
           {
             tmdbId: 6,
             title: "Boundary",
             posterPath: null,
+            imdbId: null,
             releases: [
               { country: "GB", type: 3, date: "2026-09-30" },
               { country: "GB", type: 3, date: "2026-10-01" },
@@ -353,6 +360,8 @@ test("catalog database integration", { skip: !url }, async (t) => {
           ],
         );
         assert.equal(october.films[2]!.posterPath, "/poster.jpg");
+        assert.equal(october.films[2]!.imdbId, "tt1234567");
+        assert.equal(october.films[0]!.imdbId, null);
         assert.deepEqual(october.range, { from: "2026-09", to: "2027-03" });
         assert.equal(october.monthSynced, true);
         assert.ok(october.lastSuccessfulSync);

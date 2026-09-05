@@ -6,6 +6,7 @@ export interface CalendarFilm {
   tmdbId: number;
   title: string;
   posterPath: string | null;
+  imdbId: string | null;
   releaseDate: string;
   isRevival: boolean;
 }
@@ -79,7 +80,7 @@ export async function readCalendar(
           AND release_date >= $1::date AND release_date <= $2::date
         GROUP BY film_id
       )
-      SELECT f.id, f.tmdb_id AS "tmdbId", f.title, f.poster_path AS "posterPath",
+      SELECT f.id, f.tmdb_id AS "tmdbId", f.title, f.poster_path AS "posterPath", f.imdb_id AS "imdbId",
         s.release_date::text AS "releaseDate",
         EXISTS (SELECT 1 FROM upcoming.releases earlier
           WHERE earlier.film_id=f.id AND earlier.country='GB' AND earlier.release_type=3

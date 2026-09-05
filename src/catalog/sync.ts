@@ -15,12 +15,12 @@ export interface SyncResult {
 async function saveFilm(client: PoolClient, film: FilmSnapshot) {
   const saved = await client.query<{ id: string }>(
     `
-    INSERT INTO upcoming.films (tmdb_id, title, poster_path, source_refreshed_at)
-    VALUES ($1, $2, $3, now())
+    INSERT INTO upcoming.films (tmdb_id, title, poster_path, imdb_id, source_refreshed_at)
+    VALUES ($1, $2, $3, $4, now())
     ON CONFLICT (tmdb_id) DO UPDATE SET title = EXCLUDED.title,
-      poster_path = EXCLUDED.poster_path, source_refreshed_at = now(), updated_at = now()
+      poster_path = EXCLUDED.poster_path, imdb_id = EXCLUDED.imdb_id, source_refreshed_at = now(), updated_at = now()
     RETURNING id`,
-    [film.tmdbId, film.title, film.posterPath],
+    [film.tmdbId, film.title, film.posterPath, film.imdbId],
   );
   const filmId = saved.rows[0]!.id;
   const records = JSON.stringify(
