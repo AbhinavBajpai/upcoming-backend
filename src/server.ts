@@ -1,3 +1,4 @@
+import { starStore } from "./stars/store.js";
 import { readAuthConfig } from "./auth/config.js";
 import { createAuth } from "./auth/service.js";
 import { budgetedEmail, createEmailDelivery } from "./auth/email.js";
@@ -16,6 +17,7 @@ const auth = createAuth(
 );
 const app = createApp({
   accounts: { auth, config: authConfig },
+  stars: starStore(database),
   frontendDir: config.frontendDir,
   getCalendar: (month, now) => readCalendar(database, month, now),
   checkDatabase: async () => {

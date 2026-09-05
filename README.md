@@ -154,3 +154,25 @@ A per-address/type 60-second email cooldown and a 90-message daily budget apply,
 Production authentication is a separate configuration: `AUTH_MODE=public`, an HTTPS `AUTH_BASE_URL`, a random `AUTH_SECRET` of at least 32 characters, `RESEND_API_KEY` and a verified `AUTH_EMAIL_FROM`. Generate a secret using your password manager or `openssl rand -base64 32`, then place it in the backend runtime environment. Never use the local fallback secret publicly. The local Compose file intentionally uses local mode and captured email; it is not the deployment configuration. Exact trusted proxy socket IPs can be set via `AUTH_TRUSTED_PROXY_IPS`; only those peers may supply Cloudflare's client IP header. Configure origin access restrictions with the tunnel before enabling that trust.
 
 [The account decision and security model](docs/authentication.md) covers the selected library, costs and implementation boundaries. Real email sending and the home-server tunnel configuration remain untested until the owner provides deployment details. Library logs are disabled; do not add request logging that exposes cookies, passwords or verification/reset URLs.
+
+### Starred films
+
+Verified accounts can `GET /api/stars`, or `PUT` / `DELETE /api/stars/:filmId`
+with an empty JSON object and the same Origin as the app. Ownership comes only
+from the session. Repeated saves/removals are idempotent; concurrent clients
+resolve in database execution order. Responses are never cached.
+
+Stars belong to films, not individual release events. The list selects the next
+GB wide theatrical date (type 3, including today in Europe/London), otherwise the
+most recent past date. Upcoming dates sort ascending, released films descending,
+then films with no known qualifying date appear under TBC. A withdrawn revival
+with an older UK release still appears as previously released. A film can appear
+only once in the list, even if it has multiple release events.
+
+The importer already refreshes every known film, including stars beyond the
+calendar window or absent from discovery. Postponements and withdrawn dates
+therefore preserve the star; no extra TMDB request happens when starring.
+
+`node scripts/seed-browser-tests.mjs` supplies one fictional film for frontend
+full-stack CI. It requires `DATABASE_URL` to point to `upcoming_test` and is not
+part of normal app startup or Compose.

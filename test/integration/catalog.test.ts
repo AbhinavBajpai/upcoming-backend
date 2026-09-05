@@ -51,7 +51,7 @@ test("catalog database integration", { skip: !url }, async (t) => {
     };
     const clear = () =>
       pool.query(
-        "TRUNCATE upcoming.releases, upcoming.films, upcoming.sync_runs",
+        "TRUNCATE upcoming.stars, upcoming.releases, upcoming.films, upcoming.sync_runs",
       );
     await clear();
     await t.test(

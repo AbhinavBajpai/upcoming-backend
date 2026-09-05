@@ -1,3 +1,5 @@
+import { starRoutes } from "./stars/routes.js";
+import type { StarStore } from "./stars/store.js";
 import express from "express";
 import { accountRoutes, currentUser } from "./auth/routes.js";
 import type { AccountAuth } from "./auth/service.js";
@@ -15,6 +17,7 @@ import { join, resolve } from "node:path";
 interface AppOptions {
   checkDatabase: () => Promise<void>;
   accounts?: { auth: AccountAuth; config: AuthConfig };
+  stars?: StarStore;
   frontendDir?: string;
   getCalendar?: (month: string, now: Date) => Promise<ReleaseCalendar>;
   clock?: () => Date;
@@ -23,6 +26,7 @@ interface AppOptions {
 export function createApp({
   checkDatabase,
   accounts,
+  stars,
   frontendDir,
   getCalendar,
   clock = () => new Date(),
@@ -39,27 +43,24 @@ export function createApp({
     res.setHeader("Cache-Control", "no-store");
     next();
   });
+  if (stars) app.use(starRoutes(stars, accounts, clock));
   app.get("/api/me", async (req, res) => {
     try {
       const user = accounts ? await currentUser(accounts.auth, req) : null;
       if (!user) {
-        res
-          .status(401)
-          .json({
-            error: { code: "SIGN_IN_REQUIRED", message: "Please sign in." },
-          });
+        res.status(401).json({
+          error: { code: "SIGN_IN_REQUIRED", message: "Please sign in." },
+        });
         return;
       }
       res.json({ user });
     } catch {
-      res
-        .status(503)
-        .json({
-          error: {
-            code: "ACCOUNTS_UNAVAILABLE",
-            message: "Accounts are temporarily unavailable.",
-          },
-        });
+      res.status(503).json({
+        error: {
+          code: "ACCOUNTS_UNAVAILABLE",
+          message: "Accounts are temporarily unavailable.",
+        },
+      });
     }
   });
   app.get("/api/health", (_req, res) => {
