@@ -13,7 +13,7 @@ export interface StarStore {
   list: (userId: string, now: Date) => Promise<StarredList>;
   set: (userId: string, filmId: string, starred: boolean) => Promise<boolean>;
 }
-export function starStore(pool: Pool): StarStore {
+export function starStore(pool: Pick<Pool, "query">): StarStore {
   return {
     async list(userId, now) {
       const today = ukToday(now);

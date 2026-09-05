@@ -176,3 +176,50 @@ therefore preserve the star; no extra TMDB request happens when starring.
 `node scripts/seed-browser-tests.mjs` supplies one fictional film for frontend
 full-stack CI. It requires `DATABASE_URL` to point to `upcoming_test` and is not
 part of normal app startup or Compose.
+
+### Mutual friendships (UP-10)
+
+Discovery uses a shareable `/friends/<userId>` profile link. The existing random
+account ID is a **non-secret identifier**, not an invitation token. Opening a
+link can reveal a verified user's display name to another signed-in user; it
+never grants access to their watch list or reveals their email. There is no
+public user directory or email search. The profile/link and connection screens
+will be delivered in UP-11; this ticket supplies their API contract.
+
+All endpoints below require a verified session. All POSTs require the configured
+app Origin, `Content-Type: application/json`, and body `{}`. User ownership is
+always derived from the session. All API responses use `Cache-Control: no-store`.
+
+| Method and path | Result |
+| --- | --- |
+| `GET /api/friends` | `accepted`, `incoming`, `outgoing` arrays; entries contain relationship `id`, `userId`, `displayName`, and `relationship` |
+| `GET /api/friends/profiles/:userId` | `{ profile: { id, displayName, relationshipId, relationship } }`; relationship is `self`, `none`, `incoming`, `outgoing`, or `accepted` |
+| `POST /api/friends/requests/:userId` | Creates a pending request or returns the existing relationship using the same profile shape |
+| `POST /api/friends/relationships/:id/accept` | Recipient accepts; repeated acceptance by that recipient is safe |
+| `POST /api/friends/relationships/:id/decline` | Recipient deletes a pending request |
+| `POST /api/friends/relationships/:id/cancel` | Sender deletes a pending request |
+| `POST /api/friends/relationships/:id/remove` | Either accepted friend disconnects |
+| `GET /api/friends/profiles/:userId/watch-list` | `{ profile: { id, displayName }, today, films }` using the existing star/date contract; accepted friends only |
+
+Self-requests and invalid input return 400; unauthenticated/unverified requests
+return 401. Unknown/unverified profiles and unavailable private lists return 404.
+Forbidden or stale transitions return 409: clients should refresh the relationship.
+Unexpected storage failures return a safe 503 response.
+
+An unordered pair has at most one relationship. Repeated and crossed requests
+preserve the original sender and **never auto-accept**. Every new request gets a
+fresh relationship UUID, preventing an old accept/cancel/remove operation from
+affecting a replacement request. Conditional writes serialize on the database
+row: accept vs cancel has one winner; removing a still-pending request conflicts,
+while removing after acceptance succeeds. Removal never creates a relationship.
+
+Watch-list reads hold a shared relationship lock through the private-data query.
+A disconnect waits for a read already authorized; a read waiting on a disconnect
+is denied when that disconnect commits. Data already delivered cannot be revoked:
+UP-11 must clear displayed lists on permission loss and refresh on returning to a
+friend's view. No friend film-indicator endpoint exists yet; any future indicator
+query must enforce accepted relationships at query time too.
+
+Integration coverage exercises the actor/action permission matrix, crossed and
+repeated requests, stale request IDs, concurrent transitions, disconnect/read
+locking, privacy of profile responses, and database constraints/cascades.

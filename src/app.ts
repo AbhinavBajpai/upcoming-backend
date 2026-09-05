@@ -1,3 +1,5 @@
+import { friendRoutes } from "./friends/routes.js";
+import type { FriendStore } from "./friends/store.js";
 import { starRoutes } from "./stars/routes.js";
 import type { StarStore } from "./stars/store.js";
 import express from "express";
@@ -18,6 +20,7 @@ interface AppOptions {
   checkDatabase: () => Promise<void>;
   accounts?: { auth: AccountAuth; config: AuthConfig };
   stars?: StarStore;
+  friends?: FriendStore;
   frontendDir?: string;
   getCalendar?: (month: string, now: Date) => Promise<ReleaseCalendar>;
   clock?: () => Date;
@@ -27,6 +30,7 @@ export function createApp({
   checkDatabase,
   accounts,
   stars,
+  friends,
   frontendDir,
   getCalendar,
   clock = () => new Date(),
@@ -43,6 +47,7 @@ export function createApp({
     res.setHeader("Cache-Control", "no-store");
     next();
   });
+  if (friends) app.use(friendRoutes(friends, accounts, clock));
   if (stars) app.use(starRoutes(stars, accounts, clock));
   app.get("/api/me", async (req, res) => {
     try {
@@ -125,6 +130,7 @@ export function createApp({
         "/releases",
         "/starred",
         "/friends",
+        /^\/friends\/[a-zA-Z0-9_-]{1,128}$/,
         "/login",
         "/signup",
         "/verify-email",
