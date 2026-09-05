@@ -8,6 +8,7 @@ export interface FilmSnapshot {
   tmdbId: number;
   title: string;
   posterPath: string | null;
+  imdbId: string | null;
   releases: Release[];
 }
 export interface FilmSource {

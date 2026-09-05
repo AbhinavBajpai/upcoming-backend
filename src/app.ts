@@ -1,4 +1,10 @@
 import express from "express";
+import {
+  CalendarError,
+  parseMonth,
+  type ReleaseCalendar,
+} from "./catalog/calendar.js";
+import { ukToday } from "./catalog/dates.js";
 import type { ErrorRequestHandler } from "express";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -6,9 +12,16 @@ import { join, resolve } from "node:path";
 interface AppOptions {
   checkDatabase: () => Promise<void>;
   frontendDir?: string;
+  getCalendar?: (month: string, now: Date) => Promise<ReleaseCalendar>;
+  clock?: () => Date;
 }
 
-export function createApp({ checkDatabase, frontendDir }: AppOptions) {
+export function createApp({
+  checkDatabase,
+  frontendDir,
+  getCalendar,
+  clock = () => new Date(),
+}: AppOptions) {
   const app = express();
   app.disable("x-powered-by");
   app.use(express.json({ limit: "32kb" }));
@@ -25,6 +38,42 @@ export function createApp({ checkDatabase, frontendDir }: AppOptions) {
       res.json({ status: "ok", database: "connected" });
     } catch {
       res.status(503).json({ status: "unavailable", database: "unavailable" });
+    }
+  });
+  app.get("/api/releases", async (req, res) => {
+    try {
+      const now = clock();
+      const month = parseMonth(req.query.month, ukToday(now));
+      if (!getCalendar) {
+        res.status(503).json({
+          error: {
+            code: "CATALOGUE_UNAVAILABLE",
+            message: "The release calendar is temporarily unavailable.",
+          },
+        });
+        return;
+      }
+      res.json(await getCalendar(month, now));
+    } catch (error) {
+      if (error instanceof CalendarError) {
+        res.status(400).json({
+          error: {
+            code: error.code,
+            message:
+              error.code === "INVALID_MONTH"
+                ? "Use a month in YYYY-MM format."
+                : "That month is outside the available calendar.",
+          },
+        });
+        return;
+      }
+      console.error("Release calendar query failed.");
+      res.status(503).json({
+        error: {
+          code: "CATALOGUE_UNAVAILABLE",
+          message: "The release calendar is temporarily unavailable.",
+        },
+      });
     }
   });
   app.use("/api", (_req, res) => {
@@ -52,11 +101,9 @@ export function createApp({ checkDatabase, frontendDir }: AppOptions) {
       "status" in error &&
       error.status === 400
     ) {
-      res
-        .status(400)
-        .json({
-          error: { code: "INVALID_JSON", message: "Invalid JSON body." },
-        });
+      res.status(400).json({
+        error: { code: "INVALID_JSON", message: "Invalid JSON body." },
+      });
       return;
     }
     if (
@@ -65,22 +112,18 @@ export function createApp({ checkDatabase, frontendDir }: AppOptions) {
       "status" in error &&
       error.status === 413
     ) {
-      res
-        .status(413)
-        .json({
-          error: {
-            code: "BODY_TOO_LARGE",
-            message: "Request body is too large.",
-          },
-        });
+      res.status(413).json({
+        error: {
+          code: "BODY_TOO_LARGE",
+          message: "Request body is too large.",
+        },
+      });
       return;
     }
     console.error("An API request failed unexpectedly.");
-    res
-      .status(500)
-      .json({
-        error: { code: "INTERNAL_ERROR", message: "Something went wrong." },
-      });
+    res.status(500).json({
+      error: { code: "INTERNAL_ERROR", message: "Something went wrong." },
+    });
   };
   app.use(onError);
   return app;

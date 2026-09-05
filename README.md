@@ -1,6 +1,6 @@
 # Upcoming backend
 
-TypeScript + Express API for a UK theatrical-release calendar, with PostgreSQL and versioned migrations. React lives in the sibling `upcoming-frontend` repository. The foundation includes an application shell, health endpoints, local database setup, and the validated TMDB research command. Film storage and TMDB importing are now implemented. The monthly API/interface, accounts, stars and friendships are the next backlog slices.
+TypeScript + Express API for a UK theatrical-release calendar, with PostgreSQL and versioned migrations. React lives in the sibling `upcoming-frontend` repository. The foundation includes an application shell, health endpoints, local database setup, and the validated TMDB research command. Film storage and TMDB importing are now implemented. The public monthly calendar API is implemented; accounts, stars and friendships are the next backlog slices.
 
 ## Run the local app with Docker
 
@@ -111,7 +111,7 @@ The catalogue stores films, regional release events and sync history. To import 
 docker compose --profile tools run --build --rm -T sync
 ```
 
-This one-shot job uses `TMDB_READ_ACCESS_TOKEN` from the backend `.env`. It refreshes the current UK month plus six months ahead, and rechecks known films for changed/withdrawn dates. The UI is not yet connected to the catalogue. See [the sync guide](docs/catalog-sync.md) for local Node commands, scheduling, failure behaviour and integration tests.
+This one-shot job uses `TMDB_READ_ACCESS_TOKEN` from the backend `.env`. It refreshes the current UK month plus six months ahead, and rechecks known films for changed/withdrawn dates. The React calendar reads this catalogue through `GET /api/releases`. A fresh database shows an unrefreshed state until the first successful import. See [the calendar API contract](docs/calendar-api.md). See [the sync guide](docs/catalog-sync.md) for local Node commands, scheduling, failure behaviour and integration tests.
 
 ## TMDB validation
 

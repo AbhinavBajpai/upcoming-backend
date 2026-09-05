@@ -172,3 +172,24 @@ test("batches limit concurrency and drain in-flight work before rejecting", asyn
   assert.equal(active, 0);
   assert.equal(completed, 5);
 });
+
+test("IMDb IDs are retained only when valid", async () => {
+  for (const imdbId of ["tt0066993", null, undefined, "", "invalid/id"]) {
+    const source = new TmdbSource(
+      "test-token",
+      async () =>
+        response({
+          id: 31767,
+          title: "The Devils",
+          poster_path: null,
+          imdb_id: imdbId,
+          release_dates: { results: [] },
+        }),
+      noWait,
+    );
+    assert.equal(
+      (await source.film(31767)).imdbId,
+      imdbId === "tt0066993" ? imdbId : null,
+    );
+  }
+});
