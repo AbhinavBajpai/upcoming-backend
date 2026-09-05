@@ -1,7 +1,7 @@
 name: upcoming-local
 services:
   app:
-    build:
+    build: &app-build
       context: .
       additional_contexts:
         frontend: ../upcoming-frontend
@@ -29,6 +29,24 @@ services:
       retries: 10
     init: true
     restart: unless-stopped
+  sync:
+    profiles: [tools]
+    build: *app-build
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://upcoming:upcoming_local@db:5432/upcoming
+      TMDB_READ_ACCESS_TOKEN: ${TMDB_READ_ACCESS_TOKEN:-}
+    command:
+      [
+        "sh",
+        "-c",
+        "node dist/migrate.js && exec node --use-env-proxy dist/sync.js",
+      ]
+    depends_on:
+      db:
+        condition: service_healthy
+    init: true
+    restart: "no"
   db:
     image: postgres:17-alpine
     environment:

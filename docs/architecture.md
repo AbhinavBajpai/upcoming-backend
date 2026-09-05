@@ -24,7 +24,7 @@ The static frontend is a build artifact consumed by the backend deployment. We d
 
 ## Database
 
-Use `pg` with a bounded connection pool and `node-pg-migrate` for explicit versioned migrations. This keeps the relational model and SQL visible without introducing an ORM before film/release and friendship queries are designed. The first migration creates the `upcoming` schema; UP-03 will add film, release and sync-run tables.
+Use `pg` with a bounded connection pool and `node-pg-migrate` for explicit versioned migrations. This keeps the relational model and SQL visible without introducing an ORM before film/release and friendship queries are designed. The migrations create the `upcoming` schema with film, release and sync-run tables. The one-shot sync command fills them from TMDB.
 
 PostgreSQL 17 runs in Compose for local testing. Its development credentials are deliberately local-only, and its published port binds to loopback. The existing TMDB token stays in the backend `.env`; startup does not require it and the frontend never receives it.
 
@@ -39,6 +39,6 @@ PostgreSQL 17 runs in Compose for local testing. Its development credentials are
 
 ## Deliberate limits of this slice
 
-The UI is a navigable foundation, not a populated calendar. There are no working account, star or friendship actions yet. The database is connected but has no domain tables. `/api/ready` checks connectivity, not schema compatibility. A local multi-stage app image and Compose stack are available. Home-server deployment, secret provisioning and backup automation remain UP-13.
+The UI is a navigable foundation, not a populated calendar. There are no working account, star or friendship actions yet. The catalogue schema and importer are implemented, but the UI is not connected to them yet. `/api/ready` checks connectivity, not schema compatibility. A local multi-stage app image and Compose stack are available. Home-server deployment, secret provisioning and backup automation remain UP-13.
 
-Next: UP-03 models stable films and regional release events; UP-04 imports and reconciles TMDB data; UP-05/06 connect monthly browsing. Authentication remains the decision in UP-07.
+UP-03/04 provide the catalogue and sync foundation. Next: UP-05/06 connect monthly browsing. Authentication remains the decision in UP-07.
