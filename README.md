@@ -86,7 +86,7 @@ npm run db:migrate
 ```bash
 npm --prefix ../upcoming-frontend run build
 npm run build
-npm start
+AUTH_BASE_URL=http://localhost:3000 npm start
 ```
 
 Open `http://localhost:3000`: Express serves the frontend build and the API from the same hostname. `/releases`, `/starred` and `/friends` support direct navigation; missing assets and unknown `/api` routes remain 404s. `FRONTEND_DIST_DIR` changes the frontend artifact path. Build the frontend before starting Express.
