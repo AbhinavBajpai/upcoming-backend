@@ -37,7 +37,13 @@ test("SPA deep links work while unknown API routes and missing assets remain 404
       "<!doctype html><title>Upcoming</title>",
     );
     const app = createApp({ checkDatabase: healthy, frontendDir: dir });
-    for (const path of ["/", "/releases", "/starred", "/friends"]) {
+    for (const path of [
+      "/",
+      "/releases",
+      "/starred",
+      "/friends",
+      "/friends/user-123",
+    ]) {
       await request(app).get(path).expect(200).expect("Content-Type", /html/);
     }
     await request(app)

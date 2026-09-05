@@ -130,6 +130,7 @@ export function createApp({
         "/releases",
         "/starred",
         "/friends",
+        /^\/friends\/[a-zA-Z0-9_-]{1,128}$/,
         "/login",
         "/signup",
         "/verify-email",
