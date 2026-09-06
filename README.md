@@ -238,3 +238,17 @@ their stars. The owner of a viewed list never controls the social graph used for
 indicators. Accepted relationship rows remain locked through the query so an
 interest read blocked by a disconnect rechecks that relationship after commit.
 No schema migration is needed; existing friendship and star indexes serve the query.
+
+### Cross-month release suggestions (UP-19)
+
+`GET /api/releases/search?q=devils&month=2026-09` is public and searches stored
+film titles outside the selected month. `q` is a trimmed, case-insensitive literal
+substring, limited to 200 characters; `month` defaults to the current UK month.
+Only GB type-3 release dates within the calendar's supported range are included.
+Each film appears once per matching month, using that month's earliest date.
+Results are ordered by date, title and film ID, capped at 20 with `hasMore` to
+prompt a narrower search. The response includes `query`, `month`, and `matches`
+containing `filmId`, `title`, `month` and `releaseDate`.
+
+The query uses the local catalogue and a single database snapshot; no per-search
+TMDB calls, search service, new indexes or migrations are needed for this scale.
