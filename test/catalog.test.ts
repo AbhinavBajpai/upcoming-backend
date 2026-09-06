@@ -40,7 +40,7 @@ test("discovery paginates using GB theatrical filters and deduplicates IDs", asy
   assert.equal(requested.length, 2);
   for (const url of requested) {
     assert.equal(url.searchParams.get("region"), "GB");
-    assert.equal(url.searchParams.get("with_release_type"), "3");
+    assert.equal(url.searchParams.get("with_release_type"), "2|3");
     assert.equal(url.searchParams.get("release_date.lte"), "2026-10-31");
   }
 });

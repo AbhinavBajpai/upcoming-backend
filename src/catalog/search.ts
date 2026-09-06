@@ -32,7 +32,7 @@ export async function searchReleases(
     SELECT f.id AS "filmId", f.title, to_char(r.release_date, 'YYYY-MM') AS month,
       min(r.release_date)::text AS "releaseDate"
     FROM upcoming.films f JOIN upcoming.releases r ON r.film_id=f.id CROSS JOIN bounds b
-    WHERE r.country='GB' AND r.release_type=3
+    WHERE r.country='GB' AND r.release_type IN (2,3)
       AND r.release_date >= b.first_date AND r.release_date <= $2::date
       AND to_char(r.release_date, 'YYYY-MM') <> $3
       AND position(lower($4) in lower(f.title)) > 0

@@ -77,7 +77,7 @@ test("catalog database integration", { skip: !url }, async (t) => {
         );
         const calendar =
           await pool.query(`SELECT f.title, r.release_date::text AS date FROM upcoming.releases r
-        JOIN upcoming.films f ON f.id=r.film_id WHERE country='GB' AND release_type=3
+        JOIN upcoming.films f ON f.id=r.film_id WHERE country='GB' AND release_type IN (2,3)
         AND release_date BETWEEN '2026-10-01' AND '2026-10-31'`);
         assert.deepEqual(calendar.rows, [
           { title: "The Devils", date: "2026-10-30" },
@@ -309,7 +309,10 @@ test("catalog database integration", { skip: !url }, async (t) => {
             title: "Bravo",
             posterPath: "/poster.jpg",
             imdbId: "tt1234567",
-            releases: [{ country: "GB", type: 3, date: "2026-10-30" }],
+            releases: [
+              { country: "GB", type: 3, date: "2026-10-30" },
+              { country: "GB", type: 2, date: "2026-10-30" },
+            ],
           },
           {
             tmdbId: 3,
@@ -355,12 +358,13 @@ test("catalog database integration", { skip: !url }, async (t) => {
           october.films.map((f) => [f.title, f.releaseDate, f.isRevival]),
           [
             ["Boundary", "2026-10-01", true],
+            ["Limited only", "2026-10-15", false],
             ["Alpha revival", "2026-10-30", true],
             ["Bravo", "2026-10-30", false],
           ],
         );
-        assert.equal(october.films[2]!.posterPath, "/poster.jpg");
-        assert.equal(october.films[2]!.imdbId, "tt1234567");
+        assert.equal(october.films[3]!.posterPath, "/poster.jpg");
+        assert.equal(october.films[3]!.imdbId, "tt1234567");
         assert.equal(october.films[0]!.imdbId, null);
         assert.deepEqual(october.range, { from: "2026-09", to: "2027-03" });
         assert.equal(october.monthSynced, true);

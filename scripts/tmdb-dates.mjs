@@ -5,7 +5,7 @@ export function selectTheatricalDates(records, from, to) {
       records
         .filter(
           (r) =>
-            r.type === 3 &&
+            (r.type === 2 || r.type === 3) &&
             typeof r.date === "string" &&
             /^\d{4}-\d{2}-\d{2}$/.test(r.date) &&
             r.date >= from &&

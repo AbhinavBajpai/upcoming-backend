@@ -55,3 +55,7 @@ This checks TMDB's internal consistency; it does not establish completeness or a
 - [Region support](https://developer.themoviedb.org/docs/region-support): type 3 is theatrical; limited theatrical is a separate type 2.
 - [Movie release dates](https://developer.themoviedb.org/reference/movie-release-dates): explicit regional events.
 - [TMDB FAQ](https://developer.themoviedb.org/docs/faq): non-commercial API use is free with attribution. Include an approved TMDB logo, less prominent than the app branding, in About/Credits and prominently display: “This product uses the TMDB API but is not endorsed or certified by TMDB.” Use approved logo assets without suggesting endorsement. Revisit usage terms if the project becomes commercial.
+
+## Later scope change (UP-27)
+
+The snapshot above records the original type-3 validation. Current discovery and date selection include both limited theatrical (2) and theatrical (3), using `with_release_type=2|3`. The validation script now uses this expanded policy; historical JSON remains unchanged.

@@ -163,7 +163,7 @@ from the session. Repeated saves/removals are idempotent; concurrent clients
 resolve in database execution order. Responses are never cached.
 
 Stars belong to films, not individual release events. The list selects the next
-GB wide theatrical date (type 3, including today in Europe/London), otherwise the
+GB theatrical date (type 2 or 3, including today in Europe/London), otherwise the
 most recent past date. Upcoming dates sort ascending, released films descending,
 then films with no known qualifying date appear under TBC. A withdrawn revival
 with an older UK release still appears as previously released. A film can appear
@@ -244,7 +244,7 @@ No schema migration is needed; existing friendship and star indexes serve the qu
 `GET /api/releases/search?q=devils&month=2026-09` is public and searches stored
 film titles outside the selected month. `q` is a trimmed, case-insensitive literal
 substring, limited to 200 characters; `month` defaults to the current UK month.
-Only GB type-3 release dates within the calendar's supported range are included.
+Only GB type-2/3 release dates within the calendar's supported range are included.
 Each film appears once per matching month, using that month's earliest date.
 Results are ordered by date, title and film ID, capped at 20 with `hasMore` to
 prompt a narrower search. The response includes `query`, `month`, and `matches`

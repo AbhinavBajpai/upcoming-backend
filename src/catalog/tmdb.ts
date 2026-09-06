@@ -118,7 +118,7 @@ export class TmdbSource implements FilmSource {
     for (const window of windows) {
       const query = {
         region: "GB",
-        with_release_type: "3",
+        with_release_type: "2|3",
         sort_by: "release_date.asc",
         "release_date.gte": window.from,
         "release_date.lte": window.to,

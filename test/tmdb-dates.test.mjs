@@ -20,7 +20,7 @@ for (const movie of fixture.movies) {
     assert.ok(!dates.includes(movie.discover_date));
   });
 }
-test("synthetic: limited, premiere, digital and missing/withdrawn dates do not qualify", () => {
+test("synthetic: limited theatrical qualifies; premiere, digital and missing dates do not", () => {
   assert.deepEqual(
     selectTheatricalDates(
       [
@@ -33,7 +33,7 @@ test("synthetic: limited, premiere, digital and missing/withdrawn dates do not q
       fixture.from,
       fixture.to,
     ),
-    [],
+    ["2026-10-03"],
   );
   assert.deepEqual(selectTheatricalDates([], fixture.from, fixture.to), []);
 });
@@ -43,7 +43,7 @@ test("synthetic: month bounds are inclusive and duplicate dates collapse in chro
       [
         { type: 3, date: "2026-11-01" },
         { type: 3, date: "2026-10-31" },
-        { type: 3, date: "2026-10-01" },
+        { type: 2, date: "2026-10-01" },
         { type: 3, date: "2026-09-30" },
         { type: 3, date: "2026-10-01" },
       ],
