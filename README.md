@@ -256,3 +256,5 @@ TMDB calls, search service, new indexes or migrations are needed for this scale.
 ## Hosted email and DNS
 
 The hosted test will use `https://upcoming.crashpalace.uk`, with Resend sending from `mail.upcoming.crashpalace.uk`. Follow [the setup guide](docs/hosted-setup.md) for DNS, private authentication settings and live verification. `.env.public.example` contains the agreed authentication defaults; the local Compose stack remains local-only.
+
+Production deployment and backups: [Ubuntu operations guide](docs/production.md). Hosted beta verification: [acceptance checklist](docs/beta-acceptance.md). These are prepared workflows; live server verification is still pending.
