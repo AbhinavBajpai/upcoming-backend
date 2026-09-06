@@ -77,7 +77,7 @@ test("catalog database integration", { skip: !url }, async (t) => {
         );
         const calendar =
           await pool.query(`SELECT f.title, r.release_date::text AS date FROM upcoming.releases r
-        JOIN upcoming.films f ON f.id=r.film_id WHERE country='GB' AND release_type=3
+        JOIN upcoming.films f ON f.id=r.film_id WHERE country='GB' AND release_type IN (2,3)
         AND release_date BETWEEN '2026-10-01' AND '2026-10-31'`);
         assert.deepEqual(calendar.rows, [
           { title: "The Devils", date: "2026-10-30" },
@@ -217,6 +217,98 @@ test("catalog database integration", { skip: !url }, async (t) => {
       },
     );
     await t.test(
+      "detail 404s preserve known films and releases, skip new missing IDs and still refresh other films",
+      async () => {
+        const beforeFilms = (
+          await pool.query("SELECT * FROM upcoming.films ORDER BY tmdb_id")
+        ).rows;
+        const beforeReleases = (
+          await pool.query("SELECT * FROM upcoming.releases ORDER BY id")
+        ).rows;
+        const result = await syncCatalog(
+          pool,
+          {
+            discover: async () => [900001, 900002],
+            film: async (id) => {
+              if (id !== 900002) throw new SourceError("TMDB_HTTP_404");
+              return { ...film, tmdbId: id, title: "Available film" };
+            },
+          },
+          windows,
+        );
+        assert.equal(result.status, "succeeded");
+        assert.equal(result.refreshed, 1);
+        assert.deepEqual(result.unavailableTmdbIds, [31767, 900001]);
+        assert.deepEqual(
+          (await pool.query("SELECT * FROM upcoming.films WHERE tmdb_id=31767"))
+            .rows,
+          beforeFilms,
+        );
+        assert.deepEqual(
+          (
+            await pool.query(
+              "SELECT * FROM upcoming.releases WHERE film_id=$1 ORDER BY id",
+              [beforeFilms[0].id],
+            )
+          ).rows,
+          beforeReleases,
+        );
+        assert.equal(
+          (
+            await pool.query(
+              "SELECT count(*)::int AS n FROM upcoming.films WHERE tmdb_id=900001",
+            )
+          ).rows[0].n,
+          0,
+        );
+        // Discovery 404s still fail: they cannot be mistaken for a missing film.
+        await assert.rejects(
+          syncCatalog(
+            pool,
+            {
+              discover: async () => {
+                throw new SourceError("TMDB_HTTP_404");
+              },
+              film: source.film,
+            },
+            windows,
+          ),
+          /TMDB_HTTP_404/,
+        );
+        await assert.rejects(
+          syncCatalog(
+            pool,
+            {
+              discover: async () => [31767],
+              film: async () => {
+                throw new SourceError("TMDB_HTTP_401");
+              },
+            },
+            windows,
+          ),
+          /TMDB_HTTP_401/,
+        );
+        // The known missing record remains eligible for the next run.
+        const retried: number[] = [];
+        await syncCatalog(
+          pool,
+          {
+            discover: async () => [],
+            film: async (id) => {
+              retried.push(id);
+              return { ...film, tmdbId: id };
+            },
+          },
+          windows,
+        );
+        assert.ok(retried.includes(31767));
+        await pool.query(
+          "DELETE FROM upcoming.releases WHERE film_id IN (SELECT id FROM upcoming.films WHERE tmdb_id=900002)",
+        );
+        await pool.query("DELETE FROM upcoming.films WHERE tmdb_id=900002");
+      },
+    );
+    await t.test(
       "database failure midway through saving rolls back earlier film updates",
       async () => {
         const before = (await pool.query("SELECT * FROM upcoming.films")).rows;
@@ -309,7 +401,10 @@ test("catalog database integration", { skip: !url }, async (t) => {
             title: "Bravo",
             posterPath: "/poster.jpg",
             imdbId: "tt1234567",
-            releases: [{ country: "GB", type: 3, date: "2026-10-30" }],
+            releases: [
+              { country: "GB", type: 3, date: "2026-10-30" },
+              { country: "GB", type: 2, date: "2026-10-30" },
+            ],
           },
           {
             tmdbId: 3,
@@ -355,12 +450,13 @@ test("catalog database integration", { skip: !url }, async (t) => {
           october.films.map((f) => [f.title, f.releaseDate, f.isRevival]),
           [
             ["Boundary", "2026-10-01", true],
+            ["Limited only", "2026-10-15", false],
             ["Alpha revival", "2026-10-30", true],
             ["Bravo", "2026-10-30", false],
           ],
         );
-        assert.equal(october.films[2]!.posterPath, "/poster.jpg");
-        assert.equal(october.films[2]!.imdbId, "tt1234567");
+        assert.equal(october.films[3]!.posterPath, "/poster.jpg");
+        assert.equal(october.films[3]!.imdbId, "tt1234567");
         assert.equal(october.films[0]!.imdbId, null);
         assert.deepEqual(october.range, { from: "2026-09", to: "2027-03" });
         assert.equal(october.monthSynced, true);

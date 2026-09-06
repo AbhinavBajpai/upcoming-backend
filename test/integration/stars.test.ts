@@ -9,7 +9,7 @@ import { createAuth } from "../../src/auth/service.js";
 import { readAuthConfig } from "../../src/auth/config.js";
 import { starStore } from "../../src/stars/store.js";
 import { syncCatalog } from "../../src/catalog/sync.js";
-import type { FilmSnapshot } from "../../src/catalog/types.js";
+import { SourceError, type FilmSnapshot } from "../../src/catalog/types.js";
 import { monthWindows } from "../../src/catalog/dates.js";
 
 const url = process.env.TEST_DATABASE_URL;
@@ -85,7 +85,10 @@ test("private stars and changing release dates", { skip: !url }, async (t) => {
         title: "Today",
         posterPath: null,
         imdbId: null,
-        releases: [{ country: "GB", type: 3, date: "2026-09-05" }],
+        releases: [
+          { country: "GB", type: 2, date: "2026-09-05" },
+          { country: "GB", type: 3, date: "2026-09-08" },
+        ],
       },
       {
         tmdbId: 103,
@@ -104,7 +107,7 @@ test("private stars and changing release dates", { skip: !url }, async (t) => {
         imdbId: null,
         releases: [
           { country: "US", type: 3, date: "2026-09-07" },
-          { country: "GB", type: 2, date: "2026-09-07" },
+          { country: "GB", type: 4, date: "2026-09-07" },
           { country: "GB", type: 3, date: null },
         ],
       },
@@ -185,7 +188,7 @@ test("private stars and changing release dates", { skip: !url }, async (t) => {
       },
     );
     await t.test(
-      "lists earliest upcoming GB wide releases, most recent past dates and TBC separately",
+      "lists earliest upcoming GB limited or wide theatrical releases, most recent past dates and TBC separately",
       async () => {
         for (const row of rows) await change(alice, row.id).expect(200);
         const response = await alice.get("/api/stars").expect(200);
@@ -207,6 +210,26 @@ test("private stars and changing release dates", { skip: !url }, async (t) => {
             ["Unknown", null, "tbc", false],
           ],
         );
+      },
+    );
+    await t.test(
+      "a missing TMDB film retains its saved film identity and release dates",
+      async () => {
+        const before = await store.list(aliceId, now);
+        const result = await syncCatalog(
+          pool,
+          {
+            discover: async () => [],
+            film: async (tmdbId) => {
+              if (tmdbId === 101) throw new SourceError("TMDB_HTTP_404");
+              return source.film(tmdbId);
+            },
+          },
+          monthWindows("2026-09", 1),
+        );
+        assert.deepEqual(result.unavailableTmdbIds, [101]);
+        assert.equal(result.refreshed, 3);
+        assert.deepEqual(await store.list(aliceId, now), before);
       },
     );
     await t.test(

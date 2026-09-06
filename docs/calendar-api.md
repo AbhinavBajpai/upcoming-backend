@@ -4,7 +4,7 @@
 
 The response contains `month`, UK calendar `today`, `currentMonth`, `country: "GB"`, inclusive month bounds `range: {from, to}`, `lastSuccessfulSync` (global latest successful import timestamp or null), `monthSynced`, and `films`.
 
-Each film has its stable database `id`, numeric `tmdbId`, `title`, nullable `posterPath`, nullable `imdbId`, date-only `releaseDate`, and `isRevival`. Only dated GB type-3 releases within the full requested month qualify. A film appears once, at its earliest qualifying date that month. Ordering is date, title (C collation), then ID. `isRevival` indicates a stored GB theatrical date before this month; it is inferred from source dates, not a curated classification. An original 1971 date does not hide a 2026 revival.
+Each film has its stable database `id`, numeric `tmdbId`, `title`, nullable `posterPath`, nullable `imdbId`, date-only `releaseDate`, and `isRevival`. Only dated GB type-2/3 releases within the full requested month qualify. A film appears once, at its earliest qualifying date that month. Ordering is date, title (C collation), then ID. `isRevival` indicates a stored GB theatrical date before this month; it is inferred from source dates, not a curated classification. An original 1971 date does not hide a 2026 revival.
 
 The range starts with the earlier of the current month and the first successful import window; it ends six months after the current month. Original historical release dates do not extend navigation decades into the past. Imported history remains browsable. `monthSynced` means a successful import covered the entire requested month. False is distinct from a successfully imported empty month; it does not imply that every source date is complete or current.
 

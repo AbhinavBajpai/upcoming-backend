@@ -4,7 +4,7 @@
 
 `upcoming.films` has a stable UUID and a unique TMDB ID. A film's title/poster metadata can change without changing its identity. Future stars reference the film UUID, not a date or a release event.
 
-`upcoming.releases` stores country, release type and a nullable PostgreSQL `date`. Identical `(film, country, type, date)` records, including unknown dates, are unique. Matching records retain their release UUID when refreshed. Multiple distinct release dates and revivals are retained. A calendar query selects GB/type-3 events in the requested month, sorts by those dates and can choose the earliest matching event per film for a single card. Do not use a film's primary release year to exclude revivals.
+`upcoming.releases` stores country, release type and a nullable PostgreSQL `date`. Identical `(film, country, type, date)` records, including unknown dates, are unique. Matching records retain their release UUID when refreshed. Multiple distinct release dates and revivals are retained. A calendar query selects GB/type-2/3 events in the requested month, sorts by those dates and can choose the earliest matching event per film for a single card. Do not use a film's primary release year to exclude revivals.
 
 `upcoming.sync_runs` records the window, start/completion times, status, discovery/refreshed counts and a sanitized error code. A successful completion is the timestamp the future calendar API should expose. Failed runs do not advance it.
 
@@ -80,3 +80,12 @@ TEST_DATABASE_URL=postgres://upcoming:upcoming_test@localhost:55434/upcoming_tes
 It applies migrations twice and verifies calendar/revival queries, stable identities, postponements, withdrawn/unknown dates, constraints, source failures, transaction rollback, overlapping runs and crash recovery. CI runs it against an isolated PostgreSQL service.
 
 On 5 September 2026 the real importer successfully discovered and refreshed 145 films for September 2026–March 2027 in an isolated test database. This validates the import path; independent completeness against UK distributor calendars remains outside that result.
+
+UP-27 includes limited theatrical (type 2) and theatrical (type 3) releases. Discovery uses `with_release_type=2|3` (OR); explicit GB dates still determine calendar placement. No migration is required: rerun the film sync after deploying to discover limited-only films. Existing stars retain their film IDs.
+
+A 404 from an individual film detail endpoint does not stop other films syncing.
+The JSON result includes `unavailableTmdbIds` when this happens. Existing metadata,
+release records and stars are preserved; missing new films are not inserted.
+Known films are retried on the next run. This is not treated as an explicit date
+withdrawal. Discovery 404s, authentication errors, exhausted retries and invalid
+responses still fail the run without committing catalogue changes.

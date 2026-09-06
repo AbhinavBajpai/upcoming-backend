@@ -10,6 +10,7 @@ export interface SyncResult {
   runId?: string;
   discovered: number;
   refreshed: number;
+  unavailableTmdbIds?: number[];
 }
 
 async function saveFilm(client: PoolClient, film: FilmSnapshot) {
@@ -91,7 +92,25 @@ export async function syncCatalog(
     const ids = [
       ...new Set([...discovered, ...known.rows.map((row) => row.tmdb_id)]),
     ];
-    const snapshots = await inBatches(ids, (id) => source.film(id));
+    const results = await inBatches(ids, async (id) => {
+      try {
+        return { id, film: await source.film(id) };
+      } catch (error) {
+        // A missing detail record is not a validated withdrawal. Preserve any
+        // stored film/releases/stars and retry it on the next catalogue sync.
+        // Discovery errors and all other detail failures still abort the run.
+        if (error instanceof SourceError && error.code === "TMDB_HTTP_404")
+          return { id, film: null };
+        throw error;
+      }
+    });
+    const snapshots = results.flatMap((result) =>
+      result.film ? [result.film] : [],
+    );
+    const unavailableTmdbIds = results
+      .filter((result) => !result.film)
+      .map((result) => result.id)
+      .sort((a, b) => a - b);
     await client.query("BEGIN");
     transaction = true;
     for (const snapshot of snapshots) await saveFilm(client, snapshot);
@@ -106,6 +125,7 @@ export async function syncCatalog(
       runId,
       discovered: discovered.length,
       refreshed: snapshots.length,
+      ...(unavailableTmdbIds.length ? { unavailableTmdbIds } : {}),
     };
   } catch (error) {
     if (transaction) await client.query("ROLLBACK").catch(() => {});

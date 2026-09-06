@@ -95,7 +95,7 @@ async function main() {
   for (const window of windows) {
     const params = {
       region: "GB",
-      with_release_type: "3",
+      with_release_type: "2|3",
       sort_by: "release_date.asc",
       "release_date.gte": window.from,
       "release_date.lte": window.to,
@@ -190,7 +190,7 @@ async function main() {
   );
   for (const w of discoveries)
     console.log(
-      `${w.from.slice(0, 7)}: ${w.date_mismatches} date mismatches; ${w.missing_qualifying_release} missing GB type-3 records; ${w.duplicate_ids} duplicate IDs; chronological=${w.chronological}`,
+      `${w.from.slice(0, 7)}: ${w.date_mismatches} date mismatches; ${w.missing_qualifying_release} missing GB type-2/3 records; ${w.duplicate_ids} duplicate IDs; chronological=${w.chronological}`,
     );
 }
 

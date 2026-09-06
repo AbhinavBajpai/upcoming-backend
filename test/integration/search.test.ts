@@ -61,7 +61,7 @@ test(
       const found = await searchReleases(pool, "dEvIlS", "2026-09", now);
       assert.deepEqual(
         found.matches.map((f) => f.releaseDate),
-        ["2026-08-10", "2026-10-30"],
+        ["2026-08-10", "2026-10-30", "2026-11-10"],
       );
       assert.equal(found.hasMore, false);
       const october = await readCalendar(pool, "2026-10", now);
@@ -72,7 +72,7 @@ test(
       );
       assert.equal(
         (await searchReleases(pool, "%_", "2026-09", now)).matches.length,
-        2,
+        3,
       );
       assert.equal(
         (await searchReleases(pool, "missing", "2026-09", now)).matches.length,

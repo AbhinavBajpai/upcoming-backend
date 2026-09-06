@@ -24,12 +24,12 @@ export function starStore(pool: Pick<Pool, "query">): StarStore {
             coalesce(min(r.release_date) FILTER (WHERE r.release_date >= $2::date),
                      max(r.release_date) FILTER (WHERE r.release_date < $2::date)) AS release_date
           FROM upcoming.stars s JOIN upcoming.films f ON f.id=s.film_id
-          LEFT JOIN upcoming.releases r ON r.film_id=f.id AND r.country='GB' AND r.release_type=3
+          LEFT JOIN upcoming.releases r ON r.film_id=f.id AND r.country='GB' AND r.release_type IN (2,3)
           WHERE s.user_id=$1 GROUP BY f.id
         )
         SELECT id, "tmdbId", title, "posterPath", "imdbId", release_date::text AS "releaseDate",
           CASE WHEN release_date IS NULL THEN 'tbc' WHEN release_date >= $2::date THEN 'upcoming' ELSE 'released' END AS section,
-          EXISTS (SELECT 1 FROM upcoming.releases r WHERE r.film_id=chosen.id AND r.country='GB' AND r.release_type=3 AND r.release_date < chosen.release_date) AS "isRevival"
+          EXISTS (SELECT 1 FROM upcoming.releases r WHERE r.film_id=chosen.id AND r.country='GB' AND r.release_type IN (2,3) AND r.release_date < chosen.release_date) AS "isRevival"
         FROM chosen ORDER BY
           CASE WHEN release_date >= $2::date THEN 0 WHEN release_date IS NOT NULL THEN 1 ELSE 2 END,
           CASE WHEN release_date >= $2::date THEN release_date END ASC,
