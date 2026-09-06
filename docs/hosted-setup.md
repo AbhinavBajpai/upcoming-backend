@@ -9,7 +9,7 @@ The hosted test uses `https://upcoming.crashpalace.uk` on the owner's Ubuntu ser
 | Resend sending domain                | `mail.upcoming.crashpalace.uk`                     |
 | Sender                               | `Upcoming <accounts@mail.upcoming.crashpalace.uk>` |
 
-Status: configuration prepared; Resend verification, live DNS/tunnel changes and hosted email tests are still pending. UP-13 owns production Compose, migrations and the sync schedule. The current `compose.yaml` is local-only and explicitly overrides authentication to local mode.
+Status: configuration prepared; Resend verification, live DNS/tunnel changes and hosted email tests are still pending. See [production operations](production.md) for the prepared UP-13 Compose, migrations and sync schedule. The current `compose.yaml` is local-only and explicitly overrides authentication to local mode.
 
 ## 1. Add the Resend domain
 
@@ -40,7 +40,7 @@ cp -n .env.public.example .env.public
 chmod 600 .env.public
 ```
 
-Fill `RESEND_API_KEY` and a unique random `AUTH_SECRET` of at least 32 characters using a private editor/password manager. `.env.public` is ignored by Git and excluded from Docker builds. Keep the existing local `.env` intact. The template contains authentication settings only; production database/TMDB settings and explicit Compose environment wiring are handled in UP-13.
+Fill `RESEND_API_KEY` and a unique random `AUTH_SECRET` of at least 32 characters using a private editor/password manager. `.env.public` is ignored by Git and excluded from Docker builds. Keep the existing local `.env` intact. The template contains authentication settings only; the complete production environment and Compose wiring are in `.env.production.example` and [production operations](production.md).
 
 `AUTH_TRUSTED_PROXY_IPS` must be the exact direct proxy socket addresses observed at the app, not the public Cloudflare edge ranges or the server's guessed LAN address. Until configured, forwarding headers are ignored and users may share the proxy's rate limit. Verify the controlled ingress before enabling trust.
 
