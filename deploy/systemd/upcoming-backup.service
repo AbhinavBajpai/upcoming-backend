@@ -1,0 +1,14 @@
+[Unit]
+Description=Upcoming backup
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=upcoming
+WorkingDirectory=/opt/upcoming/upcoming-backend
+EnvironmentFile=/etc/upcoming/operations.env
+ExecStart=/opt/upcoming/upcoming-backend/scripts/backup.sh
+TimeoutStartSec=2h
+UMask=0077

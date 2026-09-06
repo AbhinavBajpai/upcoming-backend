@@ -1,0 +1,11 @@
+[Unit]
+Description=Check Upcoming sync and backup freshness
+After=docker.service
+
+[Service]
+Type=oneshot
+User=upcoming
+WorkingDirectory=/opt/upcoming/upcoming-backend
+EnvironmentFile=/etc/upcoming/operations.env
+ExecStart=/opt/upcoming/upcoming-backend/scripts/operations-check.sh
+TimeoutStartSec=60
