@@ -190,16 +190,16 @@ All endpoints below require a verified session. All POSTs require the configured
 app Origin, `Content-Type: application/json`, and body `{}`. User ownership is
 always derived from the session. All API responses use `Cache-Control: no-store`.
 
-| Method and path | Result |
-| --- | --- |
-| `GET /api/friends` | `accepted`, `incoming`, `outgoing` arrays; entries contain relationship `id`, `userId`, `displayName`, and `relationship` |
-| `GET /api/friends/profiles/:userId` | `{ profile: { id, displayName, relationshipId, relationship } }`; relationship is `self`, `none`, `incoming`, `outgoing`, or `accepted` |
-| `POST /api/friends/requests/:userId` | Creates a pending request or returns the existing relationship using the same profile shape |
-| `POST /api/friends/relationships/:id/accept` | Recipient accepts; repeated acceptance by that recipient is safe |
-| `POST /api/friends/relationships/:id/decline` | Recipient deletes a pending request |
-| `POST /api/friends/relationships/:id/cancel` | Sender deletes a pending request |
-| `POST /api/friends/relationships/:id/remove` | Either accepted friend disconnects |
-| `GET /api/friends/profiles/:userId/watch-list` | `{ profile: { id, displayName }, today, films }` using the existing star/date contract; accepted friends only |
+| Method and path                                | Result                                                                                                                                  |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET /api/friends`                             | `accepted`, `incoming`, `outgoing` arrays; entries contain relationship `id`, `userId`, `displayName`, and `relationship`               |
+| `GET /api/friends/profiles/:userId`            | `{ profile: { id, displayName, relationshipId, relationship } }`; relationship is `self`, `none`, `incoming`, `outgoing`, or `accepted` |
+| `POST /api/friends/requests/:userId`           | Creates a pending request or returns the existing relationship using the same profile shape                                             |
+| `POST /api/friends/relationships/:id/accept`   | Recipient accepts; repeated acceptance by that recipient is safe                                                                        |
+| `POST /api/friends/relationships/:id/decline`  | Recipient deletes a pending request                                                                                                     |
+| `POST /api/friends/relationships/:id/cancel`   | Sender deletes a pending request                                                                                                        |
+| `POST /api/friends/relationships/:id/remove`   | Either accepted friend disconnects                                                                                                      |
+| `GET /api/friends/profiles/:userId/watch-list` | `{ profile: { id, displayName }, today, films }` using the existing star/date contract; accepted friends only                           |
 
 Self-requests and invalid input return 400; unauthenticated/unverified requests
 return 401. Unknown/unverified profiles and unavailable private lists return 404.
@@ -252,3 +252,7 @@ containing `filmId`, `title`, `month` and `releaseDate`.
 
 The query uses the local catalogue and a single database snapshot; no per-search
 TMDB calls, search service, new indexes or migrations are needed for this scale.
+
+## Hosted email and DNS
+
+The hosted test will use `https://upcoming.crashpalace.uk`, with Resend sending from `mail.upcoming.crashpalace.uk`. Follow [the setup guide](docs/hosted-setup.md) for DNS, private authentication settings and live verification. `.env.public.example` contains the agreed authentication defaults; the local Compose stack remains local-only.
