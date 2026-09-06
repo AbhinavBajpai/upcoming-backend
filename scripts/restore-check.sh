@@ -17,10 +17,17 @@ restic dump "$snapshot" upcoming.dump > "$restore_dir/upcoming.dump"
 docker run -d --name "$restore_name" --network none   -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=upcoming_restore   postgres:17-alpine >/dev/null
 ready=false
 for attempt in {1..60}; do
-  if docker exec "$restore_name" pg_isready -U postgres -d upcoming_restore >/dev/null 2>&1; then ready=true; break; fi
+  # The entrypoint's temporary initialization server accepts Unix sockets before
+  # POSTGRES_DB exists. TCP becomes available only on the final server; SELECT
+  # also proves the target database is usable (pg_isready does not prove that).
+  if docker exec "$restore_name" psql -h 127.0.0.1 -U postgres \
+    -d upcoming_restore -v ON_ERROR_STOP=1 -Atqc 'SELECT 1' >/dev/null 2>&1; then
+    ready=true
+    break
+  fi
   sleep 1
 done
 $ready || { echo 'Restore database failed to start' >&2; exit 1; }
-docker exec -i "$restore_name" pg_restore -U postgres -d upcoming_restore   --exit-on-error --no-owner --no-acl < "$restore_dir/upcoming.dump"
-docker exec "$restore_name" psql -U postgres -d upcoming_restore -v ON_ERROR_STOP=1 -c   'SET search_path TO upcoming, public; SELECT (SELECT count(*) FROM upcoming.films) AS films, (SELECT count(*) FROM upcoming.releases) AS releases, (SELECT count(*) FROM auth_user) AS users, (SELECT count(*) FROM auth_account) AS accounts, (SELECT count(*) FROM upcoming.stars) AS stars, (SELECT count(*) FROM upcoming.friendships) AS friendships;'
+docker exec -i "$restore_name" pg_restore -h 127.0.0.1 -U postgres -d upcoming_restore   --exit-on-error --no-owner --no-acl < "$restore_dir/upcoming.dump"
+docker exec "$restore_name" psql -h 127.0.0.1 -U postgres -d upcoming_restore -v ON_ERROR_STOP=1 -c   'SET search_path TO upcoming, public; SELECT (SELECT count(*) FROM upcoming.films) AS films, (SELECT count(*) FROM upcoming.releases) AS releases, (SELECT count(*) FROM auth_user) AS users, (SELECT count(*) FROM auth_account) AS accounts, (SELECT count(*) FROM upcoming.stars) AS stars, (SELECT count(*) FROM upcoming.friendships) AS friendships;'
 printf 'UPCOMING_RESTORE_CHECK_OK (inspect counts against expected data)\n'
