@@ -1,0 +1,83 @@
+name: upcoming-production
+x-runtime: &runtime
+  image: upcoming-app:${RELEASE_TAG:?Set an immutable release tag}
+  build:
+    context: .
+    additional_contexts:
+      frontend: ../upcoming-frontend
+  init: true
+  logging:
+    driver: local
+    options:
+      max-size: 10m
+      max-file: "3"
+services:
+  app:
+    <<: *runtime
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      FRONTEND_DIST_DIR: /app/public
+      DATABASE_URL: postgres://upcoming:${POSTGRES_PASSWORD:?Set a URL-safe database password}@db:5432/upcoming
+      AUTH_MODE: public
+      AUTH_BASE_URL: https://upcoming.crashpalace.uk
+      AUTH_SECRET: ${AUTH_SECRET:?Set a unique auth secret}
+      AUTH_EMAIL_FROM: Upcoming <accounts@mail.upcoming.crashpalace.uk>
+      RESEND_API_KEY: ${RESEND_API_KEY:?Set a Resend sending key}
+      AUTH_TRUSTED_PROXY_IPS: ${AUTH_TRUSTED_PROXY_IPS:-}
+    networks: [database, outbound]
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          CMD,
+          node,
+          -e,
+          "fetch('http://127.0.0.1:3000/api/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 6
+    restart: unless-stopped
+  sync:
+    <<: *runtime
+    profiles: [tools]
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://upcoming:${POSTGRES_PASSWORD:?Set a database password}@db:5432/upcoming
+      TMDB_READ_ACCESS_TOKEN: ${TMDB_READ_ACCESS_TOKEN:?Set the TMDB read token}
+    command: [node, --use-env-proxy, dist/sync.js]
+    networks: [database, outbound]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: upcoming
+      POSTGRES_USER: upcoming
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a database password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [database]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U upcoming -d upcoming]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: "3"
+    restart: unless-stopped
+networks:
+  database:
+    internal: true
+  outbound:
+volumes:
+  postgres_data:

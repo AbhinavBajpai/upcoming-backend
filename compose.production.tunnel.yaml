@@ -1,0 +1,10 @@
+# For cloudflared on an existing Docker bridge network.
+services:
+  app:
+    networks:
+      tunnel:
+        aliases: [upcoming-web]
+networks:
+  tunnel:
+    external: true
+    name: ${TUNNEL_NETWORK:?Set the existing cloudflared Docker network}
