@@ -9,7 +9,7 @@ import { createAuth } from "../../src/auth/service.js";
 import { readAuthConfig } from "../../src/auth/config.js";
 import { starStore } from "../../src/stars/store.js";
 import { syncCatalog } from "../../src/catalog/sync.js";
-import type { FilmSnapshot } from "../../src/catalog/types.js";
+import { SourceError, type FilmSnapshot } from "../../src/catalog/types.js";
 import { monthWindows } from "../../src/catalog/dates.js";
 
 const url = process.env.TEST_DATABASE_URL;
@@ -210,6 +210,26 @@ test("private stars and changing release dates", { skip: !url }, async (t) => {
             ["Unknown", null, "tbc", false],
           ],
         );
+      },
+    );
+    await t.test(
+      "a missing TMDB film retains its saved film identity and release dates",
+      async () => {
+        const before = await store.list(aliceId, now);
+        const result = await syncCatalog(
+          pool,
+          {
+            discover: async () => [],
+            film: async (tmdbId) => {
+              if (tmdbId === 101) throw new SourceError("TMDB_HTTP_404");
+              return source.film(tmdbId);
+            },
+          },
+          monthWindows("2026-09", 1),
+        );
+        assert.deepEqual(result.unavailableTmdbIds, [101]);
+        assert.equal(result.refreshed, 3);
+        assert.deepEqual(await store.list(aliceId, now), before);
       },
     );
     await t.test(
