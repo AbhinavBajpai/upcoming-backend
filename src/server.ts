@@ -1,3 +1,4 @@
+import { searchReleases } from "./catalog/search.js";
 import { friendStore } from "./friends/store.js";
 import { starStore } from "./stars/store.js";
 import { readAuthConfig } from "./auth/config.js";
@@ -22,6 +23,8 @@ const app = createApp({
   friends: friendStore(database),
   frontendDir: config.frontendDir,
   getCalendar: (month, now) => readCalendar(database, month, now),
+  findReleases: (query, month, now) =>
+    searchReleases(database, query, month, now),
   checkDatabase: async () => {
     await database.query("SELECT 1");
   },

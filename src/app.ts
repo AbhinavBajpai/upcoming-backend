@@ -1,3 +1,4 @@
+import type { ReleaseMatches } from "./catalog/search.js";
 import { friendRoutes } from "./friends/routes.js";
 import type { FriendStore } from "./friends/store.js";
 import { starRoutes } from "./stars/routes.js";
@@ -23,6 +24,11 @@ interface AppOptions {
   friends?: FriendStore;
   frontendDir?: string;
   getCalendar?: (month: string, now: Date) => Promise<ReleaseCalendar>;
+  findReleases?: (
+    query: string,
+    month: string,
+    now: Date,
+  ) => Promise<ReleaseMatches>;
   clock?: () => Date;
 }
 
@@ -33,6 +39,7 @@ export function createApp({
   friends,
   frontendDir,
   getCalendar,
+  findReleases,
   clock = () => new Date(),
 }: AppOptions) {
   const app = express();
@@ -77,6 +84,51 @@ export function createApp({
       res.json({ status: "ok", database: "connected" });
     } catch {
       res.status(503).json({ status: "unavailable", database: "unavailable" });
+    }
+  });
+  app.get("/api/releases/search", async (req, res) => {
+    const query = req.query.q;
+    if (
+      typeof query !== "string" ||
+      !query.trim() ||
+      query.length > 200 ||
+      Object.keys(req.query).some((key) => !["q", "month"].includes(key))
+    ) {
+      res
+        .status(400)
+        .json({
+          error: {
+            code: "INVALID_SEARCH",
+            message: "Enter a title of 1 to 200 characters.",
+          },
+        });
+      return;
+    }
+    try {
+      const now = clock();
+      const month = parseMonth(req.query.month, ukToday(now));
+      if (!findReleases) throw new Error("SEARCH_UNAVAILABLE");
+      res.json(await findReleases(query.trim(), month, now));
+    } catch (error) {
+      if (error instanceof CalendarError) {
+        res
+          .status(400)
+          .json({
+            error: {
+              code: error.code,
+              message: "Use a month in YYYY-MM format.",
+            },
+          });
+        return;
+      }
+      res
+        .status(503)
+        .json({
+          error: {
+            code: "SEARCH_UNAVAILABLE",
+            message: "Other-month suggestions are temporarily unavailable.",
+          },
+        });
     }
   });
   app.get("/api/releases", async (req, res) => {
