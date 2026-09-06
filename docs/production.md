@@ -83,6 +83,14 @@ systemctl --failed
 journalctl -u upcoming-sync -u upcoming-backup -u upcoming-check --since yesterday
 ```
 
-The journal and failed-unit status are the current local visibility mechanism. An owner notification destination and independent external availability check remain to be chosen before UP-14 closes; an on-server check cannot report its own power/network failure. No monitoring service is purchased or notification endpoint enabled by this preparation.
+The journal and failed-unit status provide local visibility. The owner selected Better Stack for external uptime monitoring and job heartbeats; follow the setup below and verify receipt of an alert before closing UP-14. An on-server check cannot report its own power/network failure.
 
 Incremental cost: email should remain £0 within Resend's free allowance. Dropbox can use existing available storage; verify actual quota before enabling retention. Power/internet are existing costs. Measure the real dump and repository size after first backup; posters are remote images and are not in the database.
+
+## Better Stack alerts
+
+Use an external HTTPS monitor on `https://upcoming.crashpalace.uk/api/ready`, expected status 200, with email alerts. Create separate sync and backup heartbeats expecting a ping every 24 hours with one hour of grace. Save their private URLs as `SYNC_HEARTBEAT_URL` and `BACKUP_HEARTBEAT_URL` in `/etc/upcoming/operations.env`; never commit them.
+
+Reinstall the updated sync/backup service units (adapting User to the deployment account) and run `systemctl daemon-reload`. The scheduled-job wrapper pings only after an actual successful import or a completed backup including retention. A skipped concurrent sync does not ping. Jobs that fail send no success heartbeat; Better Stack alerts after the interval plus grace. Heartbeat delivery failure produces a generic journal error and fails the service without rerunning the job. Existing direct/manual sync and backup commands do not send heartbeats.
+
+Start each service once and confirm its heartbeat becomes Up. Better Stack starts monitoring after the first ping. Use its test-alert control, if available, or a separate short-interval test heartbeat to verify that a deliberately missed ping reaches the owner's inbox; do not pause production backups for an alert test. [Better Stack heartbeat behavior](https://betterstack.com/docs/uptime/cron-and-heartbeat-monitor/).
