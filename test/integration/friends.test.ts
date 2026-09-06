@@ -295,7 +295,7 @@ test(
         },
       );
       await t.test(
-        "a watch-list read waiting on a disconnect cannot return private films after that disconnect commits",
+        "watch-list and interest reads waiting on disconnect cannot return private data after commit",
         async () => {
           const id = await pending();
           await store.act(bob.id, id, "accept");
@@ -310,13 +310,14 @@ test(
               () => null,
               (error) => error,
             );
+            const interestReading = store.interest(alice.id, [film]);
             let blocked = false;
             for (let attempt = 0; attempt < 100; attempt++) {
               const waiting = await pool.query(
-                "SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE $1",
-                ["%FOR SHARE OF f%"],
+                "SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND wait_event_type='Lock' AND query LIKE ANY($1::text[])",
+                [["%FOR SHARE OF f%", "%WITH accepted AS MATERIALIZED%"]],
               );
-              if (waiting.rowCount) {
+              if ((waiting.rowCount ?? 0) >= 2) {
                 blocked = true;
                 break;
               }
@@ -330,10 +331,110 @@ test(
             const error = await reading;
             assert.ok(error instanceof FriendError);
             assert.equal(error.code, "WATCH_LIST_UNAVAILABLE");
+            assert.deepEqual(await interestReading, {
+              films: [{ filmId: film, friends: [] }],
+            });
           } finally {
             await connection.query("ROLLBACK");
             connection.release();
           }
+        },
+      );
+      await t.test(
+        "batched interest follows only the viewer's accepted edges, including on another friend's list",
+        async () => {
+          await reset();
+          const ab = (await store.request(alice.id, bob.id)).relationshipId!;
+          const bc = (await store.request(bob.id, carol.id)).relationshipId!;
+          await store.act(bob.id, ab, "accept");
+          await store.act(carol.id, bc, "accept");
+          await starStore(pool).set(carol.id, film, true);
+          const other = (
+            await pool.query(
+              "INSERT INTO upcoming.films(tmdb_id,title,source_refreshed_at) VALUES(778,'Second private film',now()) RETURNING id",
+            )
+          ).rows[0].id;
+          await starStore(pool).set(carol.id, other, true);
+          const interest = (who: typeof alice, ids = [film, other]) =>
+            who.agent
+              .get("/api/friends/interest")
+              .query({ filmIds: ids.join(",") });
+          await request(app)
+            .get("/api/friends/interest")
+            .query({ filmIds: film })
+            .expect(401);
+          await alice.agent
+            .get("/api/friends/interest")
+            .query({ filmIds: film, userId: bob.id })
+            .expect(400);
+          await alice.agent.get("/api/friends/interest").expect(400);
+          await alice.agent
+            .get("/api/friends/interest")
+            .query({ filmIds: "invalid" })
+            .expect(400);
+          await interest(alice, Array(101).fill(film)).expect(400);
+          await alice.agent
+            .get("/api/friends/interest")
+            .query({ filmIds: [film, other] })
+            .expect(400);
+          const response = await interest(alice).expect(200);
+          assert.equal(response.headers["cache-control"], "no-store");
+          assert.deepEqual(response.body, {
+            films: [
+              { filmId: film, friends: [{ id: bob.id, displayName: "Bob" }] },
+              { filmId: other, friends: [] },
+            ],
+          });
+          assert.deepEqual((await interest(bob)).body, {
+            films: [
+              {
+                filmId: film,
+                friends: [
+                  { id: alice.id, displayName: "Alice" },
+                  { id: carol.id, displayName: "Carol" },
+                ],
+              },
+              {
+                filmId: other,
+                friends: [{ id: carol.id, displayName: "Carol" }],
+              },
+            ],
+          });
+          assert.deepEqual((await interest(carol)).body.films[0].friends, [
+            { id: bob.id, displayName: "Bob" },
+          ]);
+          // Viewing Bob's list does not change whose relationships govern indicators.
+          await watch(alice, bob.id).expect(200);
+          assert.ok(
+            !JSON.stringify((await interest(alice)).body).includes(carol.id),
+          );
+          const ac = (await store.request(alice.id, carol.id)).relationshipId!;
+          assert.ok(
+            !JSON.stringify((await interest(alice)).body).includes(carol.id),
+          );
+          await store.act(carol.id, ac, "decline");
+          assert.equal(
+            (await interest(alice, [film, film.toUpperCase()])).body.films
+              .length,
+            1,
+          );
+          await starStore(pool).set(bob.id, film, false);
+          assert.deepEqual((await interest(alice)).body.films[0].friends, []);
+          await starStore(pool).set(bob.id, film, true);
+          await pool.query(
+            'UPDATE auth_user SET "emailVerified"=false WHERE id=$1',
+            [bob.id],
+          );
+          assert.deepEqual((await interest(alice)).body.films[0].friends, []);
+          await pool.query(
+            'UPDATE auth_user SET "emailVerified"=true WHERE id=$1',
+            [bob.id],
+          );
+          await store.act(alice.id, ab, "remove");
+          assert.deepEqual((await interest(alice)).body.films[0].friends, []);
+          await interest(alice, [
+            "00000000-0000-4000-8000-000000000000",
+          ]).expect(200);
         },
       );
       await t.test(

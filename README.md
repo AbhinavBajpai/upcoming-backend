@@ -223,3 +223,18 @@ query must enforce accepted relationships at query time too.
 Integration coverage exercises the actor/action permission matrix, crossed and
 repeated requests, stale request IDs, concurrent transitions, disconnect/read
 locking, privacy of profile responses, and database constraints/cascades.
+
+### Friends’ interest (UP-12)
+
+`GET /api/friends/interest?filmIds=<uuid>,<uuid>` returns
+`{ films: [{ filmId, friends: [{ id, displayName }] }] }`. It requires a verified
+session, accepts 1–100 IDs per batch, deduplicates IDs, and returns an empty
+friends array where no accepted friend has saved the film. Extra query fields
+(including a supplied viewer ID), malformed IDs and oversized batches return 400.
+Responses are `no-store`; emails and unrelated users never appear.
+
+One SQL query per batch selects the viewer's verified, accepted friends and joins
+their stars. The owner of a viewed list never controls the social graph used for
+indicators. Accepted relationship rows remain locked through the query so an
+interest read blocked by a disconnect rechecks that relationship after commit.
+No schema migration is needed; existing friendship and star indexes serve the query.
